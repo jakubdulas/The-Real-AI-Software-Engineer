@@ -1,0 +1,5 @@
+- agent has a bility to manage versions (e.g. each prompt with adding new feature is another version)
+- dodawanie plikow, zdjec
+
+
+- stworyzc CoT and ToT agents to compare.
