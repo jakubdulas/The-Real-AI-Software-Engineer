@@ -3,3 +3,9 @@
 
 
 - stworyzc CoT and ToT agents to compare.
+
+
+- https://composio.dev/
+- zobaczyc narzedzia takie jak composio
+
+- 2nd use-case for Code Agent
