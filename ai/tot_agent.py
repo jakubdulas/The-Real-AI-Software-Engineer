@@ -1,7 +1,7 @@
 from langchain_core.runnables import Runnable
 from typing import TypedDict
 from pydantic import BaseModel
-from abstract_agent import Agent
+from ai.abstract_agent import Agent
 from langchain_core.prompts import PromptTemplate
 from langgraph.graph import MessagesState
 
