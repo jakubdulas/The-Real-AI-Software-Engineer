@@ -1,13 +1,14 @@
 class TreeNode:
-    def __init__(self, thought, finish=False, score=None):
+    def __init__(self, thought, finish=False, score=None, score_reason=None):
         self.thought = thought
         self.finish = finish
         self.score = score
+        self.score_reason = score_reason
         self.children = []
 
-    def add_child(self, thought, finish=False, score=None):
+    def add_child(self, thought, finish=False, score=None, score_reason=None):
         """Add a child node with the given thought, finish status, and score"""
-        child = TreeNode(thought, finish, score)
+        child = TreeNode(thought, finish, score, score_reason)
         self.children.append(child)
         return child
 
@@ -72,11 +73,13 @@ class ThoughtTree:
 
         return None
 
-    def add_thought(self, parent_thought, new_thought, finish=False, score=None):
+    def add_thought(
+        self, parent_thought, new_thought, finish=False, score=None, score_reason=None
+    ):
         """Add a thought node as a child of the parent thought node with optional score"""
         parent = self.find_node(parent_thought)
         if parent:
-            return parent.add_child(new_thought, finish, score)
+            return parent.add_child(new_thought, finish, score, score_reason)
         else:
             raise ValueError(f"Parent thought '{parent_thought}' not found in the tree")
 
@@ -88,11 +91,37 @@ class ThoughtTree:
         else:
             raise ValueError(f"Thought '{thought}' not found in the tree")
 
+    def change_thought(self, thought, new_thought):
+        """Set the score for a node"""
+        node = self.find_node(thought)
+        if node:
+            node.thought = new_thought
+            node.score = None
+            node.score_reason = None
+        else:
+            raise ValueError(f"Thought '{thought}' not found in the tree")
+
     def get_score(self, thought):
         """Get the score for a node"""
         node = self.find_node(thought)
         if node:
             return node.score
+        else:
+            raise ValueError(f"Thought '{thought}' not found in the tree")
+
+    def set_score_reason(self, thought, score_reason):
+        """Set the score reason for a node"""
+        node = self.find_node(thought)
+        if node:
+            node.score_reason = score_reason
+        else:
+            raise ValueError(f"Thought '{thought}' not found in the tree")
+
+    def get_score_reason(self, thought):
+        """Get the score reason for a node"""
+        node = self.find_node(thought)
+        if node:
+            return node.score_reason
         else:
             raise ValueError(f"Thought '{thought}' not found in the tree")
 
@@ -181,6 +210,8 @@ class ThoughtTree:
             node_data = {"thought": node.thought, "finish": node.finish}
             if node.score is not None:
                 node_data["score"] = node.score
+            if node.score_reason is not None:
+                node_data["score_reason"] = node.score_reason
             current_path.append(node_data)
 
             # If it's a leaf node or a finished node, add the path to all_paths
@@ -231,3 +262,38 @@ class ThoughtTree:
     def __str__(self):
         """String representation of the entire tree"""
         return str(self.root)
+
+    def to_dict(self):
+        """Convert the tree to a dictionary for serialization"""
+
+        def node_to_dict(node):
+            node_dict = {
+                "thought": node.thought,
+                "finish": node.finish,
+                "score": node.score,
+                "score_reason": node.score_reason,
+                "children": [node_to_dict(child) for child in node.children],
+            }
+            return node_dict
+
+        return {"root": node_to_dict(self.root)}
+
+    @classmethod
+    def from_dict(cls, data):
+        """Create a ThoughtTree from a dictionary"""
+        tree = cls(
+            root_thought=data["root"]["thought"], root_score=data["root"]["score"]
+        )
+
+        def add_children(parent_node, children_data):
+            for child_data in children_data:
+                child = parent_node.add_child(
+                    child_data["thought"],
+                    child_data["finish"],
+                    child_data["score"],
+                    child_data["score_reason"],
+                )
+                add_children(child, child_data["children"])
+
+        add_children(tree.root, data["root"]["children"])
+        return tree

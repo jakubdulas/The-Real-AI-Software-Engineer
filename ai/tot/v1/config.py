@@ -5,6 +5,8 @@ from typing import TypedDict
 class Configuration(TypedDict, total=False):
     max_depth: int
     max_candidates: int
+    system_prompt: str
+    llm: str
 
 
 def _ensure_configurable(config: RunnableConfig) -> Configuration:
@@ -14,4 +16,5 @@ def _ensure_configurable(config: RunnableConfig) -> Configuration:
         **configurable,
         "max_depth": configurable.get("max_depth", 5),
         "max_candidates": configurable.get("max_candidates", 2),
+        "llm": configurable.get("llm", "gpt-4o-mini"),
     }
