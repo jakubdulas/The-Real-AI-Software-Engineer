@@ -1,10 +1,10 @@
-from ai.agents.v1.agent import AgentV1
+from ai.agents.v2.sync_agent.agent import SyncAgent
+from ai.tot.v2.graph import graph
 from .prompts import coder_system_prompt
 from .states import CoderAgentState
 from .tools import tools
-from ai.tot.v1.graph import graph
 
-coder = AgentV1(CoderAgentState, "gpt-4o-mini", coder_system_prompt, tools, graph)
+coder = SyncAgent(CoderAgentState, "gpt-4o-mini", coder_system_prompt, tools, graph)
 
 if __name__ == "__main__":
     out = coder.invoke(
@@ -19,3 +19,6 @@ if __name__ == "__main__":
         config={"configurable": {"thread_id": 3, "recursion_limit": 50}},
     )
     print(out["messages"][-1].content)
+
+    # with open("./output.png", "wb") as f:
+    #     f.write(coder.graph.get_graph().draw_mermaid_png())

@@ -56,7 +56,7 @@ def reasoning_node(state: ToTState, config: Configuration) -> ToTState:
             thoughts = [t.model_dump() for t in thoughts]
             propositions.append(thoughts)
 
-        return {"propositions": propositions, "depth": 1}
+        return {"propositions": propositions, "depth": 1, "enhanced": False}
     else:
         formatted_prompt = thinker_prompt.format(system_prompt=system_prompt)
         prompts = [
@@ -66,7 +66,7 @@ def reasoning_node(state: ToTState, config: Configuration) -> ToTState:
         thoughts = llm.with_structured_output(ThoughtSchema).batch(prompts)
         thoughts = [t.model_dump() for t in thoughts]
 
-        return {"propositions": [thoughts], "depth": 0}
+        return {"propositions": [thoughts], "depth": 0, "enhanced": False}
 
 
 def build_tree(state: ToTState) -> ToTState:
@@ -130,6 +130,7 @@ def score_and_prune(state: ToTState, config: RunnableConfig) -> ToTState:
 
     for path, _ in paths_scores_sorted[config.get("max_candidates") :]:
         tree.remove_node(path[-1]["thought"])
+
     return {
         "tree": tree.to_dict(),
         "depth": 0,
@@ -186,7 +187,7 @@ def format_response(state: ToTState):
         "intermediate_steps": [
             t["thought"]
             for t in ThoughtTree.from_dict(state["tree"]).get_highest_scoring_path()[0]
-        ]
+        ][1:]
     }
 
 

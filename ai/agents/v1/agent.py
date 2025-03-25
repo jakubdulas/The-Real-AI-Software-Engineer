@@ -1,5 +1,5 @@
 from langchain_core.runnables import Runnable
-from .graph import llm_node, reason, should_continue
+from .linear_agent.graph import llm_node, reason, should_continue
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
@@ -32,8 +32,6 @@ class Agent:
             }
         )
 
-        print(configurable)
-
         return self.graph.invoke(
             *args,
             **kwargs,
@@ -43,7 +41,7 @@ class Agent:
         )
 
 
-class AgentV1(Agent):
+class LinearAgent(Agent):
     def __init__(self, state_schema, llm, system_prompt, tools, reasoning_graph=None):
         coder_builder = StateGraph(state_schema)
 

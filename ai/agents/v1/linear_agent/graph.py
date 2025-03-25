@@ -23,7 +23,6 @@ def reason(state, config: Configuration):
     ).get("intermediate_steps")
 
     formatted_steps = "\n".join([f"{n+1}. {step}" for n, step in enumerate(steps)])
-    print("STEPS: ", formatted_steps)
 
     return {
         "messages": [

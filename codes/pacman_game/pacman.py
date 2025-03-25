@@ -1,16 +1,14 @@
-import pygame
-from settings import GRID_SIZE
-
-class PacMan:
+class Pacman:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.size = GRID_SIZE
-        self.color = (255, 255, 0)  # Yellow
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+    def move(self, dx, dy, grid):
+        new_x = self.x + dx
+        new_y = self.y + dy
+        if not grid.is_wall(new_x, new_y):
+            self.x = new_x
+            self.y = new_y
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
+    def get_position(self):
+        return self.x, self.y

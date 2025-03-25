@@ -3,47 +3,10 @@ from .graph import llm_node, reason, should_continue
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
+from ai.agents.v1.agent import Agent
 
 
-class Agent:
-    def __init__(
-        self,
-        graph: Runnable,
-        llm: str,
-        system_prompt: str,
-        tools: list | None = None,
-        reasoning_graph: Runnable | None = None,
-    ):
-        self.graph = graph
-        self.llm = llm
-        self.system_prompt = system_prompt
-        self.tools = tools
-        self.reasoning_graph = reasoning_graph
-
-    def invoke(self, *args, **kwargs):
-        config = kwargs.pop("config", {})
-        configurable = config.pop("configurable", {})
-        configurable.update(
-            {
-                "system_prompt": self.system_prompt,
-                "llm": self.llm,
-                "tools": self.tools,
-                "reasoning_graph": self.reasoning_graph,
-            }
-        )
-
-        print(configurable)
-
-        return self.graph.invoke(
-            *args,
-            **kwargs,
-            config={
-                "configurable": configurable,
-            }
-        )
-
-
-class AgentV1(Agent):
+class LinearAgent(Agent):
     def __init__(self, state_schema, llm, system_prompt, tools, reasoning_graph=None):
         coder_builder = StateGraph(state_schema)
 
