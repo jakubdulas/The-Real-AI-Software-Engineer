@@ -6,6 +6,7 @@ thinker_template = """
 Before executing the task, think deeply about the next step to solve the task given by the user.
 The tought you will give is the step of how to complete given by the user task.
 The purpose of the thoughts is to break the problem into smaller steps.
+REMEMBER to not over complicate the task and do what the user is telling to do.
 Already taken steps: 
 {% if steps %}{{ steps }}{% else %}This is your first step to solve this problem.{% endif %}
 

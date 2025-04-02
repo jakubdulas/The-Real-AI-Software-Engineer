@@ -1,7 +1,6 @@
 from langgraph.graph import MessagesState
 
 
-class CoderAgentState(MessagesState):
-    current_dir: str
+class SyncAgentState(MessagesState):
     intermediate_steps: list[str]
     current_step: int

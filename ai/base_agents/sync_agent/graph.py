@@ -49,19 +49,30 @@ def next_step(state, config: Configuration):
 def llm_node(state, config: Configuration):
     _ensure_configurable(config)
     tools = config.get("configurable").get("tools")
+    agent_state_variables = config.get("configurable").get("agent_state_variables")
     llm = get_model(config.get("configurable").get("llm"))
     system_prompt = config.get("configurable").get("system_prompt")
-
-    coder_template = ChatPromptTemplate(
+    template = ChatPromptTemplate(
         [
             ("system", system_prompt),
             MessagesPlaceholder("messages"),
         ]
     )
 
-    runnable = coder_template | llm.bind_tools(tools)
-    output = runnable.invoke({"messages": state.get("messages")})
+    prompt_state = str({k: v for k, v in state.items() if k in agent_state_variables})
+
+    runnable = template | llm.bind_tools(tools)
+    output = runnable.invoke(
+        {
+            "messages": state.get("messages"),
+            "state": prompt_state,
+        }
+    )
     return {"messages": [output]}
+
+
+def zero_state(state):
+    return {"intermediate_steps": [], "current_step": 0}
 
 
 def should_continue(state):
@@ -70,5 +81,5 @@ def should_continue(state):
         return "tools"
 
     if len(state.get("intermediate_steps")) - 1 == state.get("current_step"):
-        return "__end__"
+        return "zero_state"
     return "next_step"

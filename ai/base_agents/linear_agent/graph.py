@@ -12,7 +12,6 @@ from langchain_core.prompts import ChatPromptTemplate
 load_dotenv()
 
 
-# def reason(state: CoderAgentState, config: Configuration) -> CoderAgentState:
 def reason(state, config: Configuration):
     _ensure_configurable(config)
     configurable = config.get("configurable", {})
@@ -35,32 +34,28 @@ def reason(state, config: Configuration):
     }
 
 
-# def llm_node(state: CoderAgentState, config: Configuration) -> CoderAgentState:
 def llm_node(state, config: Configuration):
     _ensure_configurable(config)
     tools = config.get("configurable").get("tools")
+    agent_state_variables = config.get("configurable").get("agent_state_variables")
     llm = get_model(config.get("configurable").get("llm"))
     system_prompt = config.get("configurable").get("system_prompt")
+    prompt_state = str({k: v for k, v in state.items() if k in agent_state_variables})
 
     print(system_prompt)
     coder_template = ChatPromptTemplate(
         [
             ("system", system_prompt),
-            # ("ai", "Current state: {state}"),
             MessagesPlaceholder("messages"),
         ]
     )
 
     runnable = coder_template | llm.bind_tools(tools)
-    output = runnable.invoke({"messages": state.get("messages")})
+    output = runnable.invoke({"messages": state.get("messages"), "state": prompt_state})
     return {"messages": [output]}
 
 
-# def should_continue(state: CoderAgentState):
 def should_continue(state):
-    if len(state.get("intermediate_steps")) == state.get("current_step"):
-        return "__end__"
-
     tool_calls = state["messages"][-1].tool_calls
     if tool_calls:
         return "tools"
