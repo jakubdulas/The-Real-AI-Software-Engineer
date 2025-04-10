@@ -1,3 +1,7 @@
-- Find evalutaion metrics
+- Planner (Project Manager)
+- Combine graph4 and coder anent
+- Document the process of the coder agent creation
+- Metrics
+- Conversation summary
 
-- Dropdowns to select agents, reasoning
+- (Documentation agent)
