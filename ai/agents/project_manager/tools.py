@@ -1,0 +1,171 @@
+from langchain_core.tools import tool, InjectedToolCallId
+from langchain_core.messages import ToolMessage
+from langchain_core.runnables import RunnableConfig
+from langgraph.prebuilt import ToolNode
+from typing import Annotated, Optional
+from langgraph.types import Command
+import os
+from langgraph.prebuilt import InjectedState
+from .project_board import ProjectBoard
+
+
+@tool
+def create_ticket(
+    task_name: str,
+    task_description: str,
+    assignee: str,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+    sprint_name: Optional[str] = None,
+):
+    "Creates ticket for task. Once created you will get ticket id. If sprint_name is not provided, then the task will be added to the backlog."
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+    ticket_id = pb.add_ticket(
+        {
+            "assignee": assignee,
+            "task_description": task_description,
+            "task_name": task_name,
+        },
+        sprint_name,
+    )
+    return {"project_board": pb.project_board, "ticket_id": ticket_id}
+
+
+@tool
+def create_sprint(
+    sprint_goal: str,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Creates sprint"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.add_sprint(sprint_goal)
+    return {
+        "project_board": pb.project_board,
+    }
+
+
+@tool
+def edit_sprint(
+    sprint_name: str,
+    sprint_goal: str,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Edits sprint"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.edit_sprint(sprint_name, sprint_goal)
+    return
+
+
+@tool
+def edit_ticket(
+    ticket_id: int,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+    task_name: Optional[str] = None,
+    task_description: Optional[str] = None,
+    assignee: Optional[str] = None,
+):
+    "Edits ticket"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    if assignee:
+        pb.edit_ticket(ticket_id, {"assignee": assignee})
+    if task_name:
+        pb.edit_ticket(ticket_id, {"task_name": task_name})
+    if task_description:
+        pb.edit_ticket(ticket_id, {"task_description": task_description})
+    return
+
+
+@tool
+def remove_sprint(
+    sprint_name: str,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Removes sprint"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.remove_sprint(sprint_name)
+    return
+
+
+@tool
+def remove_ticket(
+    ticket_id: int,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Removes ticket"
+
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.remove_ticket(ticket_id)
+    return
+
+
+@tool
+def move_ticket_to_backlog(
+    ticket_id: int,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Moves ticket to the backlog"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.move_ticket_to_backlog(ticket_id)
+    return
+
+
+@tool
+def move_ticket_to_sprint(
+    ticket_id: int,
+    sprint_name: str,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Moves ticket to the sprint"
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir)
+
+    pb.move_ticket_to_sprint(ticket_id, sprint_name)
+    return
+
+
+# @tool
+# def ask_about_project_progress(
+#     config: RunnableConfig,
+# ):
+#     'Asks "Hows the project guys"'
+#     pass
+
+
+tools = [
+    create_sprint,
+    create_ticket,
+    edit_sprint,
+    edit_ticket,
+    remove_ticket,
+    remove_sprint,
+    move_ticket_to_backlog,
+    move_ticket_to_sprint,
+]

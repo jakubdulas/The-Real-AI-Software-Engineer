@@ -352,7 +352,7 @@ if __name__ == "__main__":
             ]
         },
         config={
-            "configurable": {"llm": "gpt-4o-mini", "working_dir": "test_dir"},
+            "configurable": {"llm": "gpt-4o-mini", "working_dir": "test2"},
             "recursion_limit": 50,
         },
     )

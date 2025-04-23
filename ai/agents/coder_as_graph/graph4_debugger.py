@@ -253,6 +253,6 @@ if __name__ == "__main__":
                 )
             ]
         },
-        config={"configurable": {"llm": "gpt-4o-mini", "working_dir": "pacman"}},
+        config={"configurable": {"llm": "gpt-4o-mini", "working_dir": "test2"}},
     )
     print(output["feedback"])

@@ -36,6 +36,7 @@ def next_step(state, config: Configuration):
         current_step = 0
     else:
         current_step = state.get("current_step") + 1
+
     return {
         "current_step": current_step,
         "messages": [

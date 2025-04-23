@@ -28,11 +28,11 @@ class SyncAgent(Agent):
 
         checkpointer = MemorySaver()
 
-        graph = graph_builder.compile(checkpointer=checkpointer)
+        self.graph = graph_builder.compile(checkpointer=checkpointer)
         super().__init__(
             system_prompt,
             llm,
-            graph,
+            self.graph,
             tools,
             reasoning_graph,
             state=state,

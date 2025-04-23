@@ -1,9 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
-from langgraph.graph import MessagesState
-from operator import add
 from langchain_core.messages import AIMessage
 from dotenv import load_dotenv
-from typing_extensions import Annotated
 from .config import Configuration, _ensure_configurable
 from ai.tot.v1.utils import get_model
 from langchain_core.prompts.chat import MessagesPlaceholder
@@ -15,23 +12,25 @@ load_dotenv()
 def reason(state, config: Configuration):
     _ensure_configurable(config)
     configurable = config.get("configurable", {})
-    reasoning_graph = configurable.get("reasoning_graph")
-    steps = reasoning_graph.invoke(
-        {"messages": state.get("messages")},
-        config={"recursion_limit": 50, "configurable": configurable},
-    ).get("intermediate_steps")
+    reasoning_graph = configurable.get("reasoning_graph", None)
+    if reasoning_graph:
+        steps = reasoning_graph.invoke(
+            {"messages": state.get("messages")},
+            config={"recursion_limit": 50, "configurable": configurable},
+        ).get("intermediate_steps")
 
-    formatted_steps = "\n".join([f"{n+1}. {step}" for n, step in enumerate(steps)])
+        formatted_steps = "\n".join([f"{n+1}. {step}" for n, step in enumerate(steps)])
 
-    return {
-        "messages": [
-            AIMessage(
-                content="My plan to achieve the goal that I must follow: "
-                + formatted_steps
-            )
-        ],
-        "intermediate_steps": steps,
-    }
+        return {
+            "messages": [
+                AIMessage(
+                    content="My plan to achieve the goal that I must follow: "
+                    + formatted_steps
+                )
+            ],
+            "intermediate_steps": steps,
+        }
+    return state
 
 
 def llm_node(state, config: Configuration):
