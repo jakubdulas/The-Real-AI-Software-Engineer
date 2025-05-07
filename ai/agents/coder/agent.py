@@ -16,6 +16,7 @@ class CoderAgentState(TypedDict):
 
 class Coder(SyncAgent):
     def __init__(self, working_dir, llm="gpt-4o", reasoning_graph=cot_graph):
+        print("RESONING GRAPH", reasoning_graph)
         super().__init__(
             CoderAgentState, llm, coder_system_prompt, tools, reasoning_graph
         )
@@ -23,7 +24,9 @@ class Coder(SyncAgent):
 
     def invoke(self, *args, **kwargs):
         args[0]["project_tree"] = create_directory_tree(self.working_dir)
-        kwargs["config"]["configurable"]["working_dir"] = self.working_dir
+        if "config" in kwargs:
+            if "configurable" in kwargs["config"]:
+                kwargs["config"]["configurable"]["working_dir"] = self.working_dir
         return super().invoke(*args, **kwargs)
 
 
@@ -35,7 +38,7 @@ if __name__ == "__main__":
             "messages": [
                 (
                     "human",
-                    "Create pacman game in Python using pygame. Use squares as characters.",
+                    "Create simple gogin server. I want to use graphql.",
                 )
             ]
         },

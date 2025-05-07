@@ -18,6 +18,18 @@ from langgraph.prebuilt import create_react_agent
 
 from ai.tot.v1.utils import get_model
 from dotenv import load_dotenv
+from ai.agents.project_manager.project_board import ProjectBoard
+
+
+@tool
+def get_project_board(
+    config: RunnableConfig,
+):
+    "Removes ticket"
+
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = ProjectBoard(project_board_dir)
+    return pb.project_board
 
 
 class Researcher:
@@ -31,7 +43,7 @@ class Researcher:
         tavily_tool = TavilySearchResults(max_results=5)
         self.graph = create_react_agent(
             get_model(llm),
-            tools=[tavily_tool],
+            tools=[tavily_tool, get_project_board],
             prompt=self.SYSTEM_PROMPT,
             state_schema=Researcher.ResearcherState,
         )
@@ -43,6 +55,7 @@ class Researcher:
 if __name__ == "__main__":
     researcher = Researcher("gpt-4o-mini")
     state = researcher.invoke(
-        {"messages": [("human", "How to make human in the loop in langgraph")]}
+        {"messages": [("human", "How to imoplement human in the loop in langgraph?")]}
     )
-    print(state["messages"][-1])
+    with open("MCP.md", "w+") as f:
+        f.write(state["messages"][-1].content)

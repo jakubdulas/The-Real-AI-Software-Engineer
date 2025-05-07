@@ -16,6 +16,7 @@ def create_ticket(
     assignee: str,
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
     sprint_name: Optional[str] = None,
 ):
     "Creates ticket for task. Once created you will get ticket id. If sprint_name is not provided, then the task will be added to the backlog."
@@ -30,13 +31,21 @@ def create_ticket(
         },
         sprint_name,
     )
-    return {"project_board": pb.project_board, "ticket_id": ticket_id}
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [
+                ToolMessage(f"Done. Ticker id: {ticket_id}", tool_call_id=tool_call_id)
+            ],
+        }
+    )
 
 
 @tool
 def create_sprint(
     sprint_goal: str,
     config: RunnableConfig,
+    tool_call_id: Annotated[str, InjectedToolCallId],
     state: Annotated[dict, InjectedState],
 ):
     "Creates sprint"
@@ -45,15 +54,19 @@ def create_sprint(
     pb = ProjectBoard(project_board_dir, pb)
 
     pb.add_sprint(sprint_goal)
-    return {
-        "project_board": pb.project_board,
-    }
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
 def edit_sprint(
     sprint_name: str,
     sprint_goal: str,
+    tool_call_id: Annotated[str, InjectedToolCallId],
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
 ):
@@ -63,12 +76,18 @@ def edit_sprint(
     pb = ProjectBoard(project_board_dir, pb)
 
     pb.edit_sprint(sprint_name, sprint_goal)
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
 def edit_ticket(
     ticket_id: int,
+    tool_call_id: Annotated[str, InjectedToolCallId],
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
     task_name: Optional[str] = None,
@@ -86,7 +105,12 @@ def edit_ticket(
         pb.edit_ticket(ticket_id, {"task_name": task_name})
     if task_description:
         pb.edit_ticket(ticket_id, {"task_description": task_description})
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
@@ -94,6 +118,7 @@ def remove_sprint(
     sprint_name: str,
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
 ):
     "Removes sprint"
     project_board_dir = config.get("configurable").get("project_board_dir")
@@ -101,7 +126,12 @@ def remove_sprint(
     pb = ProjectBoard(project_board_dir, pb)
 
     pb.remove_sprint(sprint_name)
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
@@ -109,6 +139,7 @@ def remove_ticket(
     ticket_id: int,
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
 ):
     "Removes ticket"
 
@@ -117,7 +148,12 @@ def remove_ticket(
     pb = ProjectBoard(project_board_dir, pb)
 
     pb.remove_ticket(ticket_id)
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
@@ -125,6 +161,7 @@ def move_ticket_to_backlog(
     ticket_id: int,
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
 ):
     "Moves ticket to the backlog"
     project_board_dir = config.get("configurable").get("project_board_dir")
@@ -132,7 +169,12 @@ def move_ticket_to_backlog(
     pb = ProjectBoard(project_board_dir, pb)
 
     pb.move_ticket_to_backlog(ticket_id)
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 @tool
@@ -141,6 +183,7 @@ def move_ticket_to_sprint(
     sprint_name: str,
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
+    tool_call_id: Annotated[str, InjectedToolCallId],
 ):
     "Moves ticket to the sprint"
     project_board_dir = config.get("configurable").get("project_board_dir")
@@ -148,7 +191,12 @@ def move_ticket_to_sprint(
     pb = ProjectBoard(project_board_dir)
 
     pb.move_ticket_to_sprint(ticket_id, sprint_name)
-    return
+    return Command(
+        update={
+            "project_board": pb.project_board,
+            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+        }
+    )
 
 
 # @tool

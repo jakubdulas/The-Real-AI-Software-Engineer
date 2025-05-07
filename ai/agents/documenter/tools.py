@@ -162,5 +162,6 @@ tools = [
     update_documentation,
     remove_documentation,
     read_code,
+    # get_project_board,
 ]
 tool_node = ToolNode(tools)

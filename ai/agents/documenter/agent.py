@@ -22,10 +22,7 @@ from .tools import tools
 from .utils import create_directory_tree
 
 
-class DocumenterState(MessagesState):
-    remaining_steps: 1000
-
-
+# TODO: Add project
 class Documenter:
     SYSTEM_PROMPT = """You are a code documenter. Your task is to generate documentation for a codebase. The documentation for each file should be saved in a separate text file named using the following pattern: name_of_file.code_extension.md.
 You have access to tools that allow you to:
@@ -53,8 +50,12 @@ Documentation structure:
 {doc_structure}
 """
 
-    def __init__(self, llm, code_dir, documentation_dir):
+    class DocumenterState(MessagesState):
+        remaining_steps: 1000
+
+    def __init__(self, llm, code_dir, documentation_dir, skip_dirs=[]):
         load_dotenv()
+        print(create_directory_tree(code_dir, skip_dirs))
         self.graph = create_react_agent(
             get_model(llm),
             tools=tools,
@@ -62,7 +63,7 @@ Documentation structure:
                 structure=create_directory_tree(code_dir),
                 doc_structure=create_directory_tree(documentation_dir),
             ),
-            state_schema=DocumenterState,
+            state_schema=self.DocumenterState,
         )
 
     def invoke(self, *args, **kwargs):
@@ -71,16 +72,19 @@ Documentation structure:
 
 if __name__ == "__main__":
     documenter = Documenter(
-        "gpt-4o-mini",
-        "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
+        "gpt-4o",
+        "/Users/jakubdulas/Documents/InternetStars/Velara/VelaraBackend",
+        # "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
         "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/docs",
+        skip_dirs=["venv", "migrations"],
     )
     state = documenter.invoke(
-        {"messages": [("human", "Document the whole project")]},
+        {"messages": [("human", "Document the whole code.")]},
         config={
             "recursion_limit": 1000,
             "configurable": {
-                "working_dir": "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
+                "working_dir": "/Users/jakubdulas/Documents/InternetStars/Velara/VelaraBackend",
+                # "working_dir": "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
                 "documentation_dir": "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/docs",
             },
         },

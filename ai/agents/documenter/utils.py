@@ -2,10 +2,18 @@ import os
 import subprocess
 
 
-def create_directory_tree(directory):
+def create_directory_tree(directory, skip_dirs=None):
     tree = {}
+    skip_dirs = set(skip_dirs or [])
 
-    for root, _, files in os.walk(directory):
+    for root, dirs, files in os.walk(directory):
+        # Filter out unwanted directories (starts with '__' or '.' or in skip_dirs)
+        dirs[:] = [
+            d
+            for d in dirs
+            if not (d.startswith("__") or d.startswith(".") or d in skip_dirs)
+        ]
+
         rel_path = os.path.relpath(root, directory)
         if rel_path == ".":
             rel_path = ""
@@ -15,7 +23,14 @@ def create_directory_tree(directory):
             for part in rel_path.split(os.sep):
                 current_level = current_level.setdefault(part, {})
 
+        # Filter and add files
         for file in files:
+            if (
+                file.startswith("__")
+                or file.startswith(".")
+                or not file.endswith(".py")
+            ):
+                continue
             current_level[file] = None
 
     return tree

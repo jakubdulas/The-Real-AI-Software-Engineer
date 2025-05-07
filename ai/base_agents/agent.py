@@ -38,6 +38,11 @@ class Agent:
             }
         )
 
+        if not config:
+            return self.graph.invoke(
+                args[0], {"configurable": configurable, **config}, *args[2:], **kwargs
+            )
+
         return self.graph.invoke(
             *args, **kwargs, config={"configurable": configurable, **config}
         )

@@ -7,6 +7,7 @@ from langgraph.types import Command
 from .utils import create_directory_tree, run_shell_command, find_file_in_tree
 import os
 from langgraph.prebuilt import InjectedState
+from ai.agents.project_manager.project_board import ProjectBoard
 
 
 @tool
@@ -24,7 +25,7 @@ def update_code(file_path: str, old_code: str, new_code: str, config: RunnableCo
     if old_code not in code:
         return f"Old code not in given file. Read the file: {file_path}, understand and call this tool again"
 
-    new_code = code.replace(old_code, new_code, count=1)
+    new_code = code.replace(old_code, new_code, 1)
 
     with open(f"{working_dir}/{file_path}", "w+") as f:
         f.write(new_code)
@@ -110,7 +111,6 @@ def read_file(file_path: str, config: RunnableConfig):
     with open(f"{working_dir}/{file_path}", "r") as f:
         code = f.read()
 
-    print(code)
     return code
 
 
@@ -149,9 +149,38 @@ def run_code(
     # if "{path}" not in command:
     #     return "Please fix your mistake. There is no {path} in command."
     # print(command, path)
-    # print("Running code using:", command)
+    print("Running code:", file_path)
 
     return run_shell_command(f"python3.12 {working_dir}/{file_path}")
+
+
+@tool
+def mark_task_as_done(
+    ticket_id: int,
+    config: RunnableConfig,
+    state: Annotated[dict, InjectedState],
+):
+    "Removes ticket"
+
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = state.get("project_board")
+    pb = ProjectBoard(project_board_dir, pb)
+
+    pb.mark_ticket_as_done(ticket_id)
+    pb.save_project_board()
+
+    return
+
+
+@tool
+def get_project_board(
+    config: RunnableConfig,
+):
+    "Removes ticket"
+
+    project_board_dir = config.get("configurable").get("project_board_dir")
+    pb = ProjectBoard(project_board_dir)
+    return pb.project_board
 
 
 tools = [
@@ -162,5 +191,7 @@ tools = [
     update_code,
     remove_code,
     run_code,
+    mark_task_as_done,
+    # get_project_board,
 ]
 tool_node = ToolNode(tools)

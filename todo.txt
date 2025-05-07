@@ -5,3 +5,7 @@
 - Conversation summary
 
 - (Documentation agent)
+
+
+- MCP
+- A2A protocol

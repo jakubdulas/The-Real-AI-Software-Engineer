@@ -17,10 +17,11 @@ class ProjectBoard:
 
     def init_project_board(self) -> ProjectBoardType:
         project_board = {"sprints": {}, "backlog": [], "metadata": {"num_tasks": 0}}
-        self.save_project_board(project_board)
+        # self.save_project_board(project_board)
         self.project_board = project_board
 
     def read_project_board(self) -> ProjectBoardType:
+        print("READ")
         with open(self.project_board_dir, "r") as f:
             self.project_board = json.load(f)
         return self.project_board
@@ -44,13 +45,13 @@ class ProjectBoard:
             self.project_board["backlog"].append(ticket)
         else:
             self.project_board["sprints"][sprint_name]["tasks"].append(ticket)
-        self.save_project_board()
+        # self.save_project_board()
         return ticket_id
 
     def add_sprint(self, sprint_goal: str):
         sprint_name = f"Sprint {len(self.project_board['sprints'])+1}"
         self.project_board["sprints"][sprint_name] = {"goal": sprint_goal, "tasks": []}
-        self.save_project_board()
+        # self.save_project_board()
 
     def edit_ticket(self, ticket_id: int, updated_data: NewTicket):
         def update_ticket(ticket: Ticket) -> Ticket:
@@ -60,14 +61,14 @@ class ProjectBoard:
         for i, ticket in enumerate(self.project_board["backlog"]):
             if ticket["id"] == ticket_id:
                 self.project_board["backlog"][i] = update_ticket(ticket)
-                self.save_project_board()
+                # self.save_project_board()
                 return
 
         for sprint in self.project_board["sprints"].values():
             for i, ticket in enumerate(sprint["tasks"]):
                 if ticket["id"] == ticket_id:
                     sprint["tasks"][i] = update_ticket(ticket)
-                    self.save_project_board()
+                    # self.save_project_board()
                     return
 
         raise Exception("Ticket not found")
@@ -80,21 +81,21 @@ class ProjectBoard:
         for sprint in self.project_board["sprints"].values():
             sprint["tasks"] = [t for t in sprint["tasks"] if t["id"] != ticket_id]
 
-        self.save_project_board()
+        # self.save_project_board()
 
     def remove_sprint(self, sprint_name: str):
         if sprint_name not in self.project_board["sprints"]:
             raise Exception("Sprint not found")
 
         del self.project_board["sprints"][sprint_name]
-        self.save_project_board()
+        # self.save_project_board()
 
     def edit_sprint(self, sprint_name: str, new_goal: str):
         if sprint_name not in self.project_board["sprints"]:
             raise Exception("Sprint not found")
 
         self.project_board["sprints"][sprint_name]["goal"] = new_goal
-        self.save_project_board()
+        # self.save_project_board()
 
     def move_ticket_to_backlog(self, ticket_id: int):
         for sprint in self.project_board["sprints"].values():
@@ -102,7 +103,7 @@ class ProjectBoard:
                 if ticket["id"] == ticket_id:
                     self.project_board["backlog"].append(ticket)
                     del sprint["tasks"][i]
-                    self.save_project_board()
+                    # self.save_project_board()
                     return
         raise Exception("Ticket not found in any sprint")
 
@@ -114,7 +115,7 @@ class ProjectBoard:
             if ticket["id"] == ticket_id:
                 self.project_board["sprints"][sprint_name]["tasks"].append(ticket)
                 del self.project_board["backlog"][i]
-                self.save_project_board()
+                # self.save_project_board()
                 return
 
         for sprint in self.project_board["sprints"].values():
@@ -122,7 +123,7 @@ class ProjectBoard:
                 if ticket["id"] == ticket_id:
                     self.project_board["sprints"][sprint_name]["tasks"].append(ticket)
                     del sprint["tasks"][i]
-                    self.save_project_board()
+                    # self.save_project_board()
                     return
 
         raise Exception("Ticket not found in backlog or sprints")
@@ -131,14 +132,14 @@ class ProjectBoard:
         for ticket in self.project_board["backlog"]:
             if ticket["id"] == ticket_id:
                 ticket["done"] = True
-                self.save_project_board()
+                # self.save_project_board()
                 return
 
         for sprint in self.project_board["sprints"].values():
             for ticket in sprint["tasks"]:
                 if ticket["id"] == ticket_id:
                     ticket["done"] = True
-                    self.save_project_board()
+                    # self.save_project_board()
                     return
 
         raise Exception("Ticket not found")

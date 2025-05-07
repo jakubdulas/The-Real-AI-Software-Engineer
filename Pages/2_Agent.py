@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from ai.agents.coder.example import Coder
+from ai.agents.coder.agent import Coder
 from ai.tot.v1.graph import graph as tot_v1
 from ai.tot.v2.graph import graph as tot_v2
 from ai.cot.graph import cot_graph
