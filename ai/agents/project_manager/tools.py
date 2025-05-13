@@ -2,7 +2,7 @@ from langchain_core.tools import tool, InjectedToolCallId
 from langchain_core.messages import ToolMessage
 from langchain_core.runnables import RunnableConfig
 from langgraph.prebuilt import ToolNode
-from typing import Annotated, Optional
+from typing import Annotated, Optional, Literal
 from langgraph.types import Command
 import os
 from langgraph.prebuilt import InjectedState
@@ -13,7 +13,7 @@ from .project_board import ProjectBoard
 def create_ticket(
     task_name: str,
     task_description: str,
-    assignee: str,
+    assignee: Literal["Coder", "Documenter", "Researcher"],
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
     tool_call_id: Annotated[str, InjectedToolCallId],
@@ -53,11 +53,16 @@ def create_sprint(
     pb = state.get("project_board")
     pb = ProjectBoard(project_board_dir, pb)
 
-    pb.add_sprint(sprint_goal)
+    sprint_name = pb.add_sprint(sprint_goal)
     return Command(
         update={
             "project_board": pb.project_board,
-            "messages": [ToolMessage("Done", tool_call_id=tool_call_id)],
+            "messages": [
+                ToolMessage(
+                    f"Done. Created sprint with name: {sprint_name}",
+                    tool_call_id=tool_call_id,
+                )
+            ],
         }
     )
 
@@ -92,7 +97,7 @@ def edit_ticket(
     state: Annotated[dict, InjectedState],
     task_name: Optional[str] = None,
     task_description: Optional[str] = None,
-    assignee: Optional[str] = None,
+    assignee: Optional[Literal["Coder", "Documenter", "Researcher"]] = None,
 ):
     "Edits ticket"
     project_board_dir = config.get("configurable").get("project_board_dir")

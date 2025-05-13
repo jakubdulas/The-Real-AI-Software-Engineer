@@ -26,9 +26,9 @@ class SyncAgent(Agent):
         graph_builder.add_edge("tools", "llm_node")
         graph_builder.add_edge("zero_state", "__end__")
 
-        checkpointer = MemorySaver()
+        # checkpointer = MemorySaver()
 
-        self.graph = graph_builder.compile(checkpointer=checkpointer)
+        self.graph = graph_builder.compile()
         super().__init__(
             system_prompt,
             llm,

@@ -1,10 +1,10 @@
-from typing import TypedDict
+from typing import TypedDict, Literal
 
 
 class NewTicket(TypedDict):
     task_name: str
     task_description: str
-    assignee: str
+    assignee: Literal["Coder", "Documenter", "Researcher"]
 
 
 class Ticket(NewTicket):

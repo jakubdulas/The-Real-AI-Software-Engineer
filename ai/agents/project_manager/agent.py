@@ -56,6 +56,7 @@ You are the best project manager. You will be given by the user what they want t
 they are well defined, detailed, not too general. remember to split big problem into small components. Plan the work into sptints. You will get set of tools that will 
 help you to organize the work. Create sprint by sprint. When You finish the sprint then you can go further. Don't stop until the whole project is not planned.
 Use one tool at a time.
+You must plan the work in sprints. Don't add tasks to backlog only.
 
 Your team: {team}
 
@@ -125,4 +126,3 @@ if __name__ == "__main__":
             },
         },
     )
-    print(state["messages"][-1])

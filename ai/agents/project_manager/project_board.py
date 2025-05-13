@@ -51,6 +51,7 @@ class ProjectBoard:
     def add_sprint(self, sprint_goal: str):
         sprint_name = f"Sprint {len(self.project_board['sprints'])+1}"
         self.project_board["sprints"][sprint_name] = {"goal": sprint_goal, "tasks": []}
+        return sprint_name
         # self.save_project_board()
 
     def edit_ticket(self, ticket_id: int, updated_data: NewTicket):
