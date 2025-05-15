@@ -4,20 +4,21 @@ from ai.agents.coder.agent import Coder
 from ai.tot.v1.graph import graph as tot_v1
 from ai.tot.v2.graph import graph as tot_v2
 from ai.cot.graph import cot_graph
+from ai.agents.system.graph import create_system
 
 
 def get_agent():
-    reasoning = tot_v1
-    match (st.session_state.reasoning):
-        case "tot v1":
-            reasoning = tot_v1
-        case "tot v2":
-            reasoning = tot_v2
-        case "cot":
-            reasoning = cot_graph
+    # reasoning = tot_v1
+    # match (st.session_state.reasoning):
+    #     case "tot v1":
+    #         reasoning = tot_v1
+    #     case "tot v2":
+    #         reasoning = tot_v2
+    #     case "cot":
+    #         reasoning = cot_graph
 
-    st.session_state.coder = Coder(
-        st.session_state.selected_directory, st.session_state.llm, reasoning
+    st.session_state.coder = create_system(
+        st.session_state.selected_directory, st.session_state.llm
     )
 
 
@@ -28,10 +29,13 @@ if (
     st.title("🤖 Multi-Agent AI System for Software Development")
 
     st.header("🤖 Configure agent")
-    st.session_state.llm = st.selectbox("Select LLM", ("gpt-4o-mini", "gpt-4o"))
-    st.session_state.reasoning = st.selectbox(
-        "Select Reasoning", ("tot v1", "tot v2", "cot")
+    st.session_state.llm = st.selectbox(
+        "Select LLM",
+        ("gpt-4o-mini", "gpt-4o", "gpt-4.1-nano", "gpt-4.1-mini", "gpt-4.1"),
     )
+    # st.session_state.reasoning = st.selectbox(
+    #     "Select Reasoning", ("tot v1", "tot v2", "cot")
+    # )
     # st.session_state.algorithm = st.selectbox("Select Algorithm", ("sync", "linear"))
 
     st.header("📂 Select a Project Directory")
@@ -82,12 +86,36 @@ else:
 
         with st.spinner(text="Generating..."):
             output = st.session_state.coder.invoke(
-                {"messages": [("user", prompt)]},
+                {"project_scope": prompt},
                 config={"configurable": {"thread_id": 3}, "recursion_limit": 100},
             )
-            response = output["messages"][-1].content
 
-        with st.chat_message("assistant"):
-            st.markdown(response)
+        if output["researcher_messages"]:
+            with st.chat_message("assistant"):
+                st.markdown(output["researcher_messages"][-1].content)
+        if output["coder_messages"]:
+            with st.chat_message("assistant"):
+                st.markdown(output["coder_messages"][-1].content)
+        if output["documenter_messages"]:
+            with st.chat_message("assistant"):
+                st.markdown(output["documenter_messages"][-1].content)
 
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        if output["researcher_messages"]:
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "content": output["researcher_messages"][-1].content,
+                }
+            )
+        if output["coder_messages"]:
+            st.session_state.messages.append(
+                {"role": "assistant", "content": output["coder_messages"][-1].content}
+            )
+
+        if output["researcher_messages"]:
+            st.session_state.messages.append(
+                {
+                    "role": "assistant",
+                    "content": output["documenter_messages"][-1].content,
+                }
+            )

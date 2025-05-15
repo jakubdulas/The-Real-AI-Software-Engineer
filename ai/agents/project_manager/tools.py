@@ -17,7 +17,8 @@ def create_ticket(
     config: RunnableConfig,
     state: Annotated[dict, InjectedState],
     tool_call_id: Annotated[str, InjectedToolCallId],
-    sprint_name: Optional[str] = None,
+    # sprint_name: Optional[str] = None,
+    sprint_name: str,
 ):
     "Creates ticket for task. Once created you will get ticket id. If sprint_name is not provided, then the task will be added to the backlog."
     project_board_dir = config.get("configurable").get("project_board_dir")
@@ -219,6 +220,6 @@ tools = [
     edit_ticket,
     remove_ticket,
     remove_sprint,
-    move_ticket_to_backlog,
-    move_ticket_to_sprint,
+    # move_ticket_to_backlog,
+    # move_ticket_to_sprint,
 ]

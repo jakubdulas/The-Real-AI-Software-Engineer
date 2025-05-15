@@ -12,10 +12,10 @@ from ai.agents.project_manager.project_board import ProjectBoard
 
 @tool
 def update_code(file_path: str, old_code: str, new_code: str, config: RunnableConfig):
-    """Updates code. Specify the file path, old code that must be replaced and the new code.
-    If old code will not be found in file, you will be informed.
+    """Updates the file. Specify the file path, old code that must be replaced and the new code.
+    The old_code is searched in the file and once found it is removed and new_code is inserted.
     """
-    print("Updating code...")
+    print(f"Updating code in {file_path}...")
     working_dir = config.get("configurable").get("working_dir")
 
     code = ""
@@ -33,12 +33,13 @@ def update_code(file_path: str, old_code: str, new_code: str, config: RunnableCo
     with open(f"{working_dir}/{file_path}", "r") as f:
         code = f.read()
 
-    return f"Updated code:\n {code}"
+    return f"Now the file consists of the following code:\n {code}"
 
 
 @tool
 def remove_code(file_path: str, code_to_remove: str, config: RunnableConfig):
-    """Removes code. Read the file in file_path and removes provided code."""
+    """Opens the file given by file_path. Then searches piece of string containing code_to_remove
+    in the file. If found then it is removed and the file is saved."""
     print("Removing code...")
     working_dir = config.get("configurable").get("working_dir")
 
@@ -57,7 +58,7 @@ def remove_code(file_path: str, code_to_remove: str, config: RunnableConfig):
     with open(f"{working_dir}/{file_path}", "r") as f:
         code = f.read()
 
-    return f"Updated code:\n {code}"
+    return f"Now the file consists of the following code:\n {code}"
 
 
 @tool
@@ -66,7 +67,7 @@ def create_file(
     tool_call_id: Annotated[str, InjectedToolCallId],
     config: RunnableConfig,
 ):
-    """Creates a file"""
+    """Creates a file in file_path directory"""
     print("creating file....")
     working_dir = config.get("configurable").get("working_dir")
 
@@ -87,7 +88,7 @@ def overwrite_code_in_file(
     tool_call_id: Annotated[str, InjectedToolCallId],
     config: RunnableConfig,
 ):
-    """Overwrites code to the new file. Use this tool when a new file was created and you want to write the code."""
+    """Removes whole code in given file and inserts the new one."""
     print(f"Saving code to: {file_path}")
 
     working_dir = config.get("configurable").get("working_dir")
@@ -104,7 +105,7 @@ def overwrite_code_in_file(
 
 @tool
 def read_file(file_path: str, config: RunnableConfig):
-    """Read the code from given file"""
+    """Get content of given file in file_path"""
     print(f"Reading code: {file_path}")
     working_dir = config.get("configurable").get("working_dir")
 
