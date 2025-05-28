@@ -1,84 +1,93 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Build foundational classes and functions for a terminal-based Tic Tac Toe game, focusing on the Board, Player, and main game loop, and ensure interactive play for two human players.",
+      "goal": "Establish core game components and implement base gameplay loop for terminal-based Tic Tac Toe in Python.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Create a Board class to manage the game board state, render it in ASCII, and check for valid moves. Add methods to print the board and to validate cell selection.",
-          "task_name": "Implement Board class with ASCII display and move storage",
+          "task_description": "Create a Board class responsible for maintaining the state of the Tic Tac Toe board, displaying it in ASCII, managing moves, and checking occupancy for move validation. The class should be self-contained and expose methods needed by the game logic.",
+          "task_name": "Design and implement Board class",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Develop a Player class representing a human player, including name assignment and input handling. Ensure player moves can be submitted and validated against the board.",
-          "task_name": "Implement Player class for human players",
+          "task_description": "Create a Player class for human players. The class should manage player symbols (X or O) and store player-related information. It should provide a method to request and validate input from a human player.",
+          "task_name": "Design and implement Player class",
           "id": 2,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Write the main game logic to initialize players and the board, take alternating turns, invoke board rendering after each move, and check for game end conditions (win/draw).",
-          "task_name": "Implement basic game loop supporting two human players",
+          "task_description": "Develop the Game Logic to allow two human players to alternately make moves, use the Board and Player classes, and display the board after each move. The loop should continue until a win or draw is detected (check for completion).",
+          "task_name": "Implement basic game loop (two human players, no AI)",
           "id": 3,
           "done": false
-        }
-      ]
-    },
-    "Sprint 2": {
-      "goal": "Add single-player (vs AI) mode, implement simple AI opponent, and ensure game detects win/draw for both modes.",
-      "tasks": [
+        },
         {
           "assignee": "Coder",
-          "task_description": "Develop a simple AI class to play as one opponent (random legal moves). Integrate with the board and player classes for game play.",
-          "task_name": "Implement Game AI class for automated moves",
+          "task_description": "Enhance the Board or Game Logic to check for winning conditions (rows, columns, diagonals) and detect draws. Integrate mechanisms to end the game accordingly.",
+          "task_name": "Implement game win/draw detection",
           "id": 4,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Update the game loop to offer two game modes: human vs. human and human vs. AI. Ensure the flow handles player type and uses AI class when appropriate.",
-          "task_name": "Add game mode selection and AI integration to game loop",
+          "task_description": "Update Board and Player classes so that all user input is validated. Ensure players cannot make a move in an occupied cell or provide invalid input, and prompts should handle errors gracefully.",
+          "task_name": "Validate and handle illegal moves",
           "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Add board/game logic to detect win or draw scenarios after every move and end the game accordingly. Print clear messages for game over conditions.",
-          "task_name": "Implement win and draw detection logic",
+          "task_description": "Revise all implemented classes and functions to add comments explaining their role and usage. Ensure the code is easy to understand and clearly structured for further extensibility.",
+          "task_name": "Add class/function structure comments and improve code readability",
           "id": 6,
           "done": false
         }
       ]
     },
-    "Sprint 3": {
-      "goal": "Refactor code for extensibility and clarity; add detailed inline comments and Python docstrings.",
+    "Sprint 2": {
+      "goal": "Add AI player functionality and allow mode selection between two-player and player-vs-AI modes.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Review and refactor all code for clear separation between Board, Player, Game, and AI classes. Ensure the codebase is modular, easy to extend, and follows good practices.",
-          "task_name": "Refactor code for modularity and extensibility",
+          "task_description": "Create a basic AI Player class that can make legal moves automatically. The AI should use simple logic, like selecting a random empty cell. Integrate it to work with the existing Board and Game Logic.",
+          "task_name": "Implement simple AI Player class",
           "id": 7,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Document the code thoroughly with inline comments and Python docstrings, explaining the purpose and usage of each class, method, and function.",
-          "task_name": "Add comments and Python docstrings to all classes and functions",
+          "task_description": "Extend the game startup logic to allow the user to choose between playing against another human player or the AI. Ensure the game initializes the correct player objects based on selection and that the main loop supports both modes.",
+          "task_name": "Allow player to select game mode (Human vs Human or Human vs AI)",
           "id": 8,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Document the AI Player class and mode selection code with clear comments. Add extensibility notes for how to improve the AI logic or add new player types.",
+          "task_name": "Add code comments and extendibility notes for AI and game mode selection",
+          "id": 9,
           "done": false
         }
       ]
     },
-    "Sprint 4": {
-      "goal": "Write external documentation explaining code structure, game usage, and extension points.",
+    "Sprint 3": {
+      "goal": "Document the codebase, including gameplay, classes and extensibility notes for future development.",
       "tasks": [
         {
           "assignee": "Documenter",
-          "task_description": "Write a detailed README describing how to run the terminal-based Tic Tac Toe game, available modes, code structure, and how to extend the core components (Board, Player, AI, etc.).",
-          "task_name": "Create README file with project overview, usage instructions, and notes for future extension",
-          "id": 9,
+          "task_description": "Create a section in the documentation file to guide human players on how to start the game, select modes, make moves, and understand win/draw conditions.",
+          "task_name": "Document gameplay instructions for players",
+          "id": 10,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Add Python docstrings to classes and functions throughout the codebase to explain their usage, inputs, and outputs. Create a separate documentation file summarizing the code structure and giving guidance for further extension.",
+          "task_name": "Create in-code docstrings and overall code documentation",
+          "id": 11,
           "done": false
         }
       ]
@@ -86,6 +95,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 9
+    "num_tasks": 10
   }
 }

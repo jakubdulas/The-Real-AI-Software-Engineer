@@ -1,96 +1,136 @@
 class Board:
     """
-    Represents a Tic Tac Toe board.
-    Manages the board state, printing, and move validation.
+    The Board class encapsulates all functionality related to the Tic Tac Toe board.
+    Responsibilities include:
+      - Maintaining the internal game board state
+      - Displaying the current board state in an ASCII art format
+      - Validating moves and board positions
+      - Recording player moves
+      - Checking win and draw conditions
+      - Utility functions to support game logic and extensibility
     """
-    def __init__(self, size=3):
-        """Initializes an empty board of given size (default 3x3)."""
-        self.size = size
-        self.grid = [[' ' for _ in range(size)] for _ in range(size)]
 
-    def print_board(self):
-        """Displays the board using ASCII art."""
-        for i in range(self.size):
-            row = ' | '.join(self.grid[i])
-            print(f" {row} ")
-            if i < self.size - 1:
-                print('-' * (self.size * 4 - 3))
+    BOARD_SIZE = 3
+    EMPTY_CELL = ' '
 
-    def is_valid_move(self, row, col):
+    def __init__(self):
         """
-        Checks if the move at the given (row, col) is valid (cell is empty and within bounds).
+        Initialize an empty 3x3 Tic Tac Toe board.
+        """
+        self.grid = [[self.EMPTY_CELL for _ in range(self.BOARD_SIZE)] for _ in range(self.BOARD_SIZE)]
+
+    def display(self):
+        """
+        Print the board to the terminal in a user-friendly ASCII format with row/column numbers.
+        """
+        print('\n  1   2   3')
+        for idx, row in enumerate(self.grid):
+            print(f"{idx+1} " + " | ".join(row))
+            if idx < self.BOARD_SIZE - 1:
+                print("  " + "---+---+---")
+        print()
+
+    def is_occupied(self, row, col):
+        """
+        Check if a specific cell is already taken by a player symbol.
         Args:
-            row (int): Row index (0-based)
-            col (int): Col index (0-based)
+            row (int): Row index (0-based).
+            col (int): Column index (0-based).
         Returns:
-            bool: True if move is valid, False otherwise.
+            bool: True if occupied; False otherwise.
         """
-        if 0 <= row < self.size and 0 <= col < self.size:
-            return self.grid[row][col] == ' '
-        return False
+        return self.grid[row][col] != self.EMPTY_CELL
 
     def is_cell_empty(self, row, col):
         """
-        Checks if a particular cell is empty (for compatibility with Player input validation).
-        """
-        if 0 <= row < self.size and 0 <= col < self.size:
-            return self.grid[row][col] == ' '
-        return False
-
-    def check_winner(self):
-        """
-        Checks if there is a winner or a tie.
-        Returns:
-            symbol (str): 'X' or 'O' if someone won, 'Tie' if it's a draw, None otherwise.
-        """
-        # Check rows and columns
-        for i in range(self.size):
-            if self.grid[i][0] != ' ' and all(self.grid[i][j] == self.grid[i][0] for j in range(self.size)):
-                return self.grid[i][0]
-            if self.grid[0][i] != ' ' and all(self.grid[j][i] == self.grid[0][i] for j in range(self.size)):
-                return self.grid[0][i]
-
-        # Check diagonals
-        if self.grid[0][0] != ' ' and all(self.grid[i][i] == self.grid[0][0] for i in range(self.size)):
-            return self.grid[0][0]
-        if self.grid[0][self.size-1] != ' ' and all(self.grid[i][self.size-1-i] == self.grid[0][self.size-1] for i in range(self.size)):
-            return self.grid[0][self.size-1]
-
-        # Check for tie (if all cells are filled)
-        if all(self.grid[row][col] != ' ' for row in range(self.size) for col in range(self.size)):
-            return 'Tie'
-
-        # No winner or tie
-        return None
-
-    def make_and_show_move(self, row, col, symbol):
-        """
-        Places a move and immediately prints the updated board.
+        Check if a board cell is both inside bounds and currently empty.
         Args:
-            row (int): Row index (0-based)
-            col (int): Column index (0-based)
-            symbol (str): Player's symbol ('X' or 'O')
+            row (int): Row index (0-based).
+            col (int): Column index (0-based).
         Returns:
-            bool: True if move was successful, False otherwise.
+            bool: True if within bounds and not occupied; False otherwise.
         """
-        if self.place_move(row, col, symbol):
-            self.print_board()
-            return True
-        else:
-            print("Invalid move! Try again.")
-            return False
+        return self.is_valid_position(row, col) and not self.is_occupied(row, col)
 
-    def place_move(self, row, col, symbol):
+    def make_move(self, row, col, symbol):
         """
-        Places a move on the board at (row, col) for the given symbol (e.g., 'X' or 'O').
+        Place a symbol ('X' or 'O') in the specified cell if it is a valid move.
         Args:
-            row (int)
-            col (int)
-            symbol (str): Player's symbol
+            row (int): Row index (0-based).
+            col (int): Column index (0-based).
+            symbol (str): The player's symbol.
         Returns:
-            bool: True if move was placed, False if invalid.
+            bool: True if move succeeds; False otherwise (e.g., cell is occupied).
         """
-        if self.is_valid_move(row, col):
+        if self.is_valid_position(row, col) and not self.is_occupied(row, col):
             self.grid[row][col] = symbol
             return True
         return False
+
+    def is_valid_position(self, row, col):
+        """
+        Determine if (row, col) is within the 3x3 board boundaries.
+        Args:
+            row (int): Row index (0-based).
+            col (int): Column index (0-based).
+        Returns:
+            bool: True if within bounds; otherwise False.
+        """
+        return 0 <= row < self.BOARD_SIZE and 0 <= col < self.BOARD_SIZE
+
+    def reset(self):
+        """
+        Clear the board, resetting all cells to empty. Use to restart a game.
+        """
+        self.grid = [[self.EMPTY_CELL for _ in range(self.BOARD_SIZE)] for _ in range(self.BOARD_SIZE)]
+
+    def get_empty_positions(self):
+        """
+        Return a list of all empty cells as (row, col) tuples.
+        Returns:
+            list: List of unoccupied cell coordinates.
+        """
+        empty = []
+        for row in range(self.BOARD_SIZE):
+            for col in range(self.BOARD_SIZE):
+                if not self.is_occupied(row, col):
+                    empty.append((row, col))
+        return empty
+
+    def check_winner(self, symbol):
+        """
+        Check whether the specified symbol has achieved a win (3 in a row, column, or diagonal).
+        Args:
+            symbol (str): The symbol to check for ('X' or 'O').
+        Returns:
+            bool: True if the symbol has a winning line; otherwise False.
+        """
+        # Check rows
+        for row in self.grid:
+            if all(cell == symbol for cell in row):
+                return True
+
+        # Check columns
+        for col in range(self.BOARD_SIZE):
+            if all(self.grid[row][col] == symbol for row in range(self.BOARD_SIZE)):
+                return True
+
+        # Check main diagonal
+        if all(self.grid[i][i] == symbol for i in range(self.BOARD_SIZE)):
+            return True
+        # Check anti-diagonal
+        if all(self.grid[i][self.BOARD_SIZE - 1 - i] == symbol for i in range(self.BOARD_SIZE)):
+            return True
+        return False
+
+    def is_full(self):
+        """
+        Return True if there are no empty spaces left on the board (draw condition).
+        Returns:
+            bool: True if board is completely filled; otherwise False.
+        """
+        return all(
+            self.grid[row][col] != self.EMPTY_CELL
+            for row in range(self.BOARD_SIZE)
+            for col in range(self.BOARD_SIZE)
+        )

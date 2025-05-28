@@ -1,58 +1,44 @@
-# `note.py`
+# note.py
 
-## Overview
-
-The `note.py` module defines the core `Note` class used to represent a note within the note manager application. Each note instance encapsulates a title, content, and a timestamp, and provides serialization/deserialization methods for persistence and exchange with other modules.
-
----
-
-## Module Responsibility
-- Defines the `Note` data structure.
-- Handles conversion between `Note` objects and serializable dictionaries.
-- Provides easy integration with storage and user interface modules.
-
----
+## Module Purpose
+The `note.py` module defines the core representation of a Note for the note manager application. It implements a flexible, easily serializable note class with input validation, providing the basis for creating, storing, and transmitting note objects throughout the app.
 
 ## Classes
-
-### `Note`
-Represents a single note with title, content, and timestamp.
+### Note
+Represents a single note, containing a title, content, and timestamp.
 
 #### Attributes
-- `title` (`str`): The title of the note.
-- `content` (`str`): The body/content of the note.
-- `timestamp` (`str`): Creation timestamp in ISO 8601 format. If not specified, set to the current time.
+- **title (str)**: The note's title. Required.
+- **content (str)**: The body/content of the note. Required (can be empty string, but must be a string).
+- **timestamp (str)**: The ISO-8601 formatted date/time the note was created or last modified.
+
+#### Constructor
+```python
+Note(title: str, content: str, timestamp: Optional[str] = None)
+```
+- **title**: The title for the note. Must be a non-empty string.
+- **content**: The note's content/body. Must be a string.
+- **timestamp** (optional): If not provided, set to current datetime.
+
+Raises `ValueError` if `title` is empty or `content` is not a string.
 
 #### Methods
+- `__repr__() -> str`
+  - Returns a short string-representation suitable for debugging.
+- `to_dict() -> Dict[str, Any]`
+  - Serializes to a dict for easy storage/JSON conversion.
+  - Returns: `{ 'title': ..., 'content': ..., 'timestamp': ... }`
+- `@classmethod from_dict(data: Dict[str, Any]) -> Note`
+  - Constructs a `Note` from dictionary data (e.g., parsed from JSON).
+  - Expects at least 'title' and 'content'. 'timestamp' is optional.
 
-- `__init__(self, title: str, content: str, timestamp: str = None)`
-    - Initializes a new `Note` instance.
-    - If `timestamp` is not given, default to current datetime (`datetime.now().isoformat()`).
-
-- `to_dict(self) -> Dict[str, Any]`
-    - Serializes this note to a dictionary suitable for JSON storage.
-    - **Returns:** `dict` with keys `title`, `content`, `timestamp`.
-
-- `@classmethod from_dict(cls, data: Dict[str, Any]) -> 'Note'`
-    - Creates a `Note` instance from a dictionary (as loaded from storage).
-    - Handles missing fields gracefully (default empty string for `title`/`content`).
-    - **Arguments:**
-        - `data`: Dictionary representation, e.g.: `{ 'title': ..., 'content': ..., 'timestamp': ... }`
-    - **Returns:** `Note` object.
-
----
-
-## Example Usage
+#### Usage Example
 ```python
 from note import Note
-note = Note(title="Shopping List", content="Eggs, Milk, Bread")
-note_dict = note.to_dict()
-# Later...
-restored_note = Note.from_dict(note_dict)
+note = Note('Shopping List', 'Eggs, Milk', None)
+data = note.to_dict()
+restored = Note.from_dict(data)
 ```
 
 ---
 
-## Developer Notes
-- Timestamp is always managed as an ISO-formatted string for cross-platform/date compatibility.
-- Used by `storage.py` for persistence and in the main interface for display and manipulation.

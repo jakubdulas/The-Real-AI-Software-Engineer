@@ -10,31 +10,26 @@
 
 #### Metrics per test (project)
 
-| Metryka                     | Agent A | Agent B | ... |
-| --------------------------- | ------- | ------- | --- |
-| Time of generation (s)      | 15      | 30      |     |
-| Number of lines of code     | 250     | 180     |     |
-| Number of used tokens       | 850     | 900     |     |
-| Levenshtein distance        | 120     | 70      |     |
-| Cyclomatic complexity (avg) | 4.5     | 3.1     |     |
-| Code duplication (%)        | 18%     | 5%      |     |
-| Lint errors                 | 12      | 2       |     |
+| Metryka                               | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 | Project 6 |
+| ------------------------------------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| Time of generation (s)                | 171.98    | 612.75    | 459.72    | 625.31    | 860.55    | 385.27    |
+| Number of lines of code               | 128       | 377       | 400       | 292       | 657       | 252       |
+| Number of used tokens                 | 102095    | 314406    | 237500    | 324657    | 445496    | 207828    |
+| Number of lines of code after changes | 128       | 377       | 400       | 292       | 678       | 252       |
+| Levenshtein distance                  | 0         | 0         | 0         | 0         | 293       |           |
+| Cyclomatic complexity (avg)           |           |           |           |           |           |           |
+| Code duplication (%)                  |           |           |           |           |           |           |
+| Lint errors                           |           |           |           |           |           |           |
 
 #### Aggregation Metrics
 
-| Metryka           | Agent A | Agent B | ... |
-| ----------------- | ------- | ------- | --- |
-| % Tests completed | 70%     | 95%     |     |
+| Metryka   | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 | Project 6 |
+| --------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| % success | 100%      | 100%      | 100%      | 100%      | 70,7%     |           |
 
 (Limit 1000) characters
-Test 1 - Perfect - passed - 100%
-Test 2 - Changed 10 characters - passed - (1000-10)/1000 % = 99%
-Test 3 - Changed 150 ch - passed - (1000 - 150) / 1000 % = 85%
-Test 4
-Test 5
-Test 6
 
-Avg (100% + 99% + 85% + ...)/6 = Final result
+Average success:
 
 ### Report
 

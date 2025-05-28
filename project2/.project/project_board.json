@@ -1,58 +1,86 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Set up the core structure of the note manager and implement the Note class and storage layer.",
+      "goal": "Establish core foundation and modules for the command-line note manager. Implement Note class, storage handling, and initial menu structure.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Create note.py containing a Note class with attributes: title, content, timestamp. Include methods for creating instances, serializing/deserializing notes to dictionaries for storage.",
-          "task_name": "Design and implement the Note class",
+          "task_description": "Design and implement a Note class in note.py with title, content, timestamp, and necessary methods for serialization/deserialization.",
+          "task_name": "Implement the Note class in note.py",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Create storage.py to handle saving/loading notes to a JSON file, converting between Note objects and dictionaries, and providing basic CRUD operations for notes. Ensure input/output operations are modular and robust.",
-          "task_name": "Implement storage for notes in JSON file",
+          "task_description": "Build out the starting terminal interface in main.py, including a menu and basic input capturing. No note operations need to actually work yet, just stub functions and menu rendering.",
+          "task_name": "Set up the initial menu structure and basic command-line interface in main.py",
           "id": 2,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Create the initial file structure with empty main.py and a basic utils.py with placeholder for helper functions (e.g., for input validation).",
-          "task_name": "Set up modular project file structure and basic utils.py",
+          "task_description": "Implement helper functions needed for input validation and timestamp formatting in utils.py. Identify reusable utilities that can support the project.",
+          "task_name": "Create helper functions in utils.py",
           "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create functions in storage.py to save notes to a JSON file and load them back, including error handling. Functions should work with Note objects and handle file not found or invalid JSON gracefully.",
+          "task_name": "Implement storage handling in storage.py",
+          "id": 4,
           "done": false
         }
       ]
     },
     "Sprint 2": {
-      "goal": "Implement user interface, menu interaction, and integrate components for full CRUD functionality via the terminal.",
+      "goal": "Connect all core modules. Enable note creation, deletion, viewing, and persistent storage through the command-line menu.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Develop main.py to handle user prompts for creating, deleting, and viewing notes. Integrate input validation using utils.py. Connect to storage and Note components for full functionality. Menu must show note list, allow creation (prompting title/content), deletion (by selection), and viewing details.",
-          "task_name": "Implement terminal menu and user interaction logic",
-          "id": 4,
+          "task_description": "Connect input flow in main.py to create Note objects and persist them using functions in storage.py. Add input validation with utils.py. Enable creating and saving a new note from the menu.",
+          "task_name": "Integrate Note and storage modules for note creation in main.py",
+          "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Add helper functions in utils.py to ensure robust and reusable input validation for menu options, note title, and content. Integrate with main.py.",
-          "task_name": "Enhance utils.py with input validation functions",
-          "id": 5,
+          "task_description": "Enable listing and viewing existing notes using data loaded via storage.py. Format display to show title, timestamp, and provide access to note details.",
+          "task_name": "Implement viewing of notes in main.py",
+          "id": 6,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Review and refactor the codebase to ensure logic and user interface are cleanly separated as per best practices. Ensure code modularity and maintainability.",
+          "task_name": "Refactor for logic/UI separation and clean code structure",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Implement functionality so users can select and delete notes. Update storage and the menu after deletion, with input validation for safe user actions.",
+          "task_name": "Enable deletion of notes in main.py",
+          "id": 8,
           "done": false
         }
       ]
     },
     "Sprint 3": {
-      "goal": "Document the codebase for maintainability and developer onboarding.",
+      "goal": "Document the codebase, usage, and module responsibilities.",
       "tasks": [
         {
           "assignee": "Documenter",
-          "task_description": "Generate comprehensive documentation for note.py, storage.py, utils.py, and main.py. Include module-level docstrings, class/method descriptions, usage examples, and clear explanations of each file's responsibility.",
-          "task_name": "Create code documentation for all modules",
-          "id": 6,
+          "task_description": "Provide clear usage instructions and internal documentation for main.py, covering how to operate the menu, input requirements, and the flow between modules.",
+          "task_name": "Document the main.py interface and usage",
+          "id": 9,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Write comprehensive documentation for note.py, storage.py, and utils.py, including module purpose, method/class docstrings, and usage examples where necessary.",
+          "task_name": "Generate documentation for Note, storage, and utility modules",
+          "id": 10,
           "done": false
         }
       ]
@@ -60,6 +88,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 6
+    "num_tasks": 10
   }
 }

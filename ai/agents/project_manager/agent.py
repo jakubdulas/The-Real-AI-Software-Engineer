@@ -57,6 +57,7 @@ they are well defined, detailed, not too general. remember to split big problem 
 help you to organize the work. Create sprint by sprint. When You finish the sprint then you can go further. Don't stop until the whole project is not planned.
 Use one tool at a time.
 You must plan the work in sprints. Don't add tasks to backlog only.
+Plan all tasks that must be completed to accomplush entire project.
 
 Your team: {team}
 

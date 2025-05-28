@@ -1,40 +1,41 @@
 class Player:
     """
-    Represents a human player in Tic Tac Toe.
-    Handles player name assignment and input/move submission.
+    Player class represents a human participant in the game of Tic Tac Toe.
+    It stores player-specific information and facilitates user interaction
+    for move selection with robust input validation.
     """
     def __init__(self, name: str, symbol: str):
         """
-        Initialize a Player with a name and playing symbol (X or O).
+        Initialize a new human player with a given name and symbol (X or O).
+        Args:
+            name (str): Human-readable name for the player.
+            symbol (str): Symbol used on the board (should be 'X' or 'O').
         """
         self.name = name
-        self.symbol = symbol
+        self.symbol = symbol.upper()
 
     def get_move(self, board):
         """
-        Prompt the player to enter their move.
-        
+        Repeatedly prompt the player for a move until a valid, unoccupied
+        board cell (1-based input) is given. Ensures correct format and cell availability.
         Args:
-            board: The Board object for validation.
+            board (Board): The game board, which must implement is_valid_position and is_cell_empty.
         Returns:
-            (row, col): Tuple of integers indicating the move.
+            tuple: (row, col) zero-based tuple indicating the selected cell.
         """
         while True:
             try:
-                move = input(f"{self.name} ({self.symbol}), enter your move as row,col (e.g. 1,3): ").strip()
-                if ',' not in move:
-                    print("Invalid format. Please use row,col (e.g. 1,3).")
+                user_input = input(f"{self.name} ({self.symbol}), enter your move as row,col (e.g., 1,3): ")
+                row_str, col_str = user_input.strip().split(",")
+                row, col = int(row_str.strip()) - 1, int(col_str.strip()) - 1
+                
+                if not board.is_valid_position(row, col):
+                    print("Coordinates must be from 1 to 3. Please try again.")
                     continue
-                row_str, col_str = move.split(',')
-                row, col = int(row_str) - 1, int(col_str) - 1
-                if row not in range(3) or col not in range(3):
-                    print("Row and column must be between 1 and 3.")
+                
+                if not board.is_cell_empty(row, col):
+                    print("That cell is already taken. Try again.")
                     continue
-                if not (hasattr(board, 'is_cell_empty') and board.is_cell_empty(row, col)):
-                    # Fallback to is_valid_move for compatibility
-                    if not board.is_valid_move(row, col):
-                        print("Cell is already occupied or move invalid. Choose another one.")
-                        continue
-                return row, col
+                return (row, col)
             except ValueError:
-                print("Invalid input. Please enter numbers for row and column.")
+                print("Invalid input format. Enter row,col as two integers (e.g. 2,3). Try again.")

@@ -1,53 +1,28 @@
-"""
-utils.py
-General-purpose helper and validation functions for the note manager.
-"""
+from datetime import datetime
+from typing import Dict, List, Any
 
-def validate_non_empty_string(value: str) -> bool:
+def validate_input(data: Dict[str, Any], required_fields: List[str]) -> bool:
     """
-    Validates that the input is a non-empty string (not just whitespace).
+    Validate that all required fields are present and non-empty in the data dict.
 
     Args:
-        value (str): The string to validate.
-
+        data (Dict[str, Any]): Input data to validate.
+        required_fields (List[str]): Keys that must exist and be non-empty in data.
     Returns:
-        bool: True if valid, False otherwise.
+        bool: True if all fields are valid, False otherwise.
     """
-    return isinstance(value, str) and bool(value.strip())
+    for field in required_fields:
+        if field not in data or data[field] is None or (isinstance(data[field], str) and not data[field].strip()):
+            return False
+    return True
 
-def validate_menu_choice(choice: str, valid_options: list) -> bool:
+def format_timestamp(dt: datetime) -> str:
     """
-    Validates that a user menu choice is among the allowed options.
+    Format a datetime object into a human-readable timestamp string.
 
     Args:
-        choice (str): User's menu input.
-        valid_options (list): List of allowed option strings (e.g., ['1', '2', '3']).
-
+        dt (datetime): The datetime object to format.
     Returns:
-        bool: True if valid, False otherwise.
+        str: Formatted timestamp string (e.g., '2024-06-07 14:03:02').
     """
-    return choice in valid_options
-
-def validate_note_title(title: str) -> bool:
-    """
-    Validates the note title (non-empty, reasonably sized, trimmed).
-
-    Args:
-        title (str): The note title string.
-
-    Returns:
-        bool: True if valid, False otherwise.
-    """
-    return validate_non_empty_string(title) and len(title.strip()) <= 100
-
-def validate_note_content(content: str) -> bool:
-    """
-    Validates note content (non-empty, trimmed, not excessively long).
-
-    Args:
-        content (str): The note content string.
-
-    Returns:
-        bool: True if valid, False otherwise.
-    """
-    return validate_non_empty_string(content) and len(content.strip()) <= 2000
+    return dt.strftime('%Y-%m-%d %H:%M:%S')
