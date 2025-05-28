@@ -1,0 +1,91 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Build foundational classes and functions for a terminal-based Tic Tac Toe game, focusing on the Board, Player, and main game loop, and ensure interactive play for two human players.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Create a Board class to manage the game board state, render it in ASCII, and check for valid moves. Add methods to print the board and to validate cell selection.",
+          "task_name": "Implement Board class with ASCII display and move storage",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Develop a Player class representing a human player, including name assignment and input handling. Ensure player moves can be submitted and validated against the board.",
+          "task_name": "Implement Player class for human players",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write the main game logic to initialize players and the board, take alternating turns, invoke board rendering after each move, and check for game end conditions (win/draw).",
+          "task_name": "Implement basic game loop supporting two human players",
+          "id": 3,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Add single-player (vs AI) mode, implement simple AI opponent, and ensure game detects win/draw for both modes.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Develop a simple AI class to play as one opponent (random legal moves). Integrate with the board and player classes for game play.",
+          "task_name": "Implement Game AI class for automated moves",
+          "id": 4,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Update the game loop to offer two game modes: human vs. human and human vs. AI. Ensure the flow handles player type and uses AI class when appropriate.",
+          "task_name": "Add game mode selection and AI integration to game loop",
+          "id": 5,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Add board/game logic to detect win or draw scenarios after every move and end the game accordingly. Print clear messages for game over conditions.",
+          "task_name": "Implement win and draw detection logic",
+          "id": 6,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 3": {
+      "goal": "Refactor code for extensibility and clarity; add detailed inline comments and Python docstrings.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Review and refactor all code for clear separation between Board, Player, Game, and AI classes. Ensure the codebase is modular, easy to extend, and follows good practices.",
+          "task_name": "Refactor code for modularity and extensibility",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Document the code thoroughly with inline comments and Python docstrings, explaining the purpose and usage of each class, method, and function.",
+          "task_name": "Add comments and Python docstrings to all classes and functions",
+          "id": 8,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 4": {
+      "goal": "Write external documentation explaining code structure, game usage, and extension points.",
+      "tasks": [
+        {
+          "assignee": "Documenter",
+          "task_description": "Write a detailed README describing how to run the terminal-based Tic Tac Toe game, available modes, code structure, and how to extend the core components (Board, Player, AI, etc.).",
+          "task_name": "Create README file with project overview, usage instructions, and notes for future extension",
+          "id": 9,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 9
+  }
+}

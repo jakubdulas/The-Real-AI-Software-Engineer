@@ -1,0 +1,60 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Develop core temperature conversion logic and basic user input handling for the converter.py script.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Write a reusable function `convert(value, from_unit, to_unit)` that accurately converts temperatures between Celsius, Fahrenheit, and Kelvin. Cover all conversion paths and handle edge cases where applicable.",
+          "task_name": "Implement convert(value, from_unit, to_unit) for temperature conversion between Celsius, Fahrenheit, and Kelvin.",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write code to accept user input for a numeric temperature value and the unit (Celsius, Fahrenheit, or Kelvin). Validate the input for valid numbers and unit names (case-insensitive, handle incorrect/unknown units gracefully).",
+          "task_name": "Implement user input logic for numeric temperature value and unit selection.",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Display the converted temperature values (all three units) clearly in the console. Output should be formatted, easy to read, and label each temperature value with the correct unit. Integrate with user input and conversion logic.",
+          "task_name": "Display converted temperature values clearly in the console.",
+          "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Detect and gracefully inform the user of invalid numeric values or unsupported units. Ensure clear error messages are printed to the console and the program handles such cases without crashing.",
+          "task_name": "Add error handling and invalid input messages.",
+          "id": 4,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Finalize code organization, ensure cleanliness/readability, and document the entire converter.py file.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Refactor the code for clean structure and organization. Ensure functions are well-separated, variables are clearly named, and code is easy to follow for future maintainers. Maintain all core features: input, conversion, display, and error handling.",
+          "task_name": "Refactor converter.py for clarity, readability, and testable design.",
+          "id": 5,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Write comprehensive docstrings for all functions in converter.py, and add helpful usage comments explaining key logic for future maintainers or users. Ensure documentation is clear and explains usage patterns and function behaviors.",
+          "task_name": "Document code in converter.py with docstrings and usage comments.",
+          "id": 6,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 6
+  }
+}
