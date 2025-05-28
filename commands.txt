@@ -1,0 +1,9 @@
+code duplcation:
+jscpd [path]
+
+complexity:
+radon cc -a [path]
+
+Lint errors python:
+ruff check [path]
+
