@@ -5,8 +5,9 @@ from ai.agents.researcher.agent import Researcher
 from operator import add
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START
-from langgraph.prebuilt import ToolNode
-from langgraph.checkpoint.memory import MemorySaver
+from langchain_openai.chat_models import ChatOpenAI
+from langchain_core.messages.utils import count_tokens_approximately
+from langmem.short_term import SummarizationNode
 
 
 def create_system(code_dir, model="gpt-4o-mini"):
@@ -23,6 +24,8 @@ def create_system(code_dir, model="gpt-4o-mini"):
     documenter = Documenter(model, code_dir, docs_dir)
     researcher = Researcher(model)
 
+    llm = ChatOpenAI(model=model, temperature=0)
+
     class InputSystemState(TypedDict):
         project_scope: str
 
@@ -34,6 +37,43 @@ def create_system(code_dir, model="gpt-4o-mini"):
 
         project_board: dict
         current_sprint: int
+
+    pm_summarize_node = SummarizationNode(
+        token_counter=count_tokens_approximately,
+        model=llm,
+        max_tokens=1024,
+        max_tokens_before_summary=512,
+        max_summary_tokens=512,
+        input_messages_key="pm_messages",
+        output_messages_key="pm_messages",
+    )
+    coder_summarize_node = SummarizationNode(
+        token_counter=count_tokens_approximately,
+        model=llm,
+        max_tokens=5120,
+        max_tokens_before_summary=2560,
+        max_summary_tokens=2560,
+        input_messages_key="coder_messages",
+        output_messages_key="coder_messages",
+    )
+    documenter_summarize_node = SummarizationNode(
+        token_counter=count_tokens_approximately,
+        model=llm,
+        max_tokens=5120,
+        max_tokens_before_summary=2560,
+        max_summary_tokens=2560,
+        input_messages_key="documenter_messages",
+        output_messages_key="documenter_messages",
+    )
+    researcher_summarize_node = SummarizationNode(
+        token_counter=count_tokens_approximately,
+        model=llm,
+        max_tokens=5120,
+        max_tokens_before_summary=2560,
+        max_summary_tokens=2560,
+        input_messages_key="researcher_messages",
+        output_messages_key="researcher_messages",
+    )
 
     def plan_project(state):
         output = pm.invoke(
@@ -141,11 +181,24 @@ def create_system(code_dir, model="gpt-4o-mini"):
     graph_builder.add_node("start_sprint", start_sprint)
     graph_builder.add_node("complete_tasks", complete_tasks)
 
+    graph_builder.add_node("pm_summarize_node", pm_summarize_node)
+    graph_builder.add_node("coder_summarize_node", coder_summarize_node)
+    graph_builder.add_node("documenter_summarize_node", documenter_summarize_node)
+    graph_builder.add_node("researcher_summarize_node", researcher_summarize_node)
+
     graph_builder.add_edge(START, "plan_project")
     graph_builder.add_conditional_edges(
         "plan_project", should_start_sprint, ["start_sprint", "__end__"]
     )
-    graph_builder.add_edge("start_sprint", "complete_tasks")
+    graph_builder.add_edge("start_sprint", "pm_summarize_node")
+    graph_builder.add_edge("start_sprint", "coder_summarize_node")
+    graph_builder.add_edge("start_sprint", "documenter_summarize_node")
+    graph_builder.add_edge("start_sprint", "researcher_summarize_node")
+
+    graph_builder.add_edge("pm_summarize_node", "complete_tasks")
+    graph_builder.add_edge("coder_summarize_node", "complete_tasks")
+    graph_builder.add_edge("documenter_summarize_node", "complete_tasks")
+    graph_builder.add_edge("researcher_summarize_node", "complete_tasks")
     graph_builder.add_conditional_edges(
         "complete_tasks", should_start_sprint, ["start_sprint", "__end__"]
     )

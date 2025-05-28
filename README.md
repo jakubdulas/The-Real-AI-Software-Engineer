@@ -1,10 +1,8 @@
-# v0.2
+# v0.3
 
 ## Key changes
 
-- Improved prompts, especially coder system and tools prompts.
-- Sharing the output from researcher to documenter.
-- Removing backlog for PM.
+- Added conversation summary
 
 ### Metrics
 

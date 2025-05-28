@@ -1,6 +1,7 @@
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
+from langmem.short_term import SummarizationNode
 from ..agent import Agent
 from .graph import llm_node, reason, should_continue, next_step, zero_state
 from .state import SyncAgentState
