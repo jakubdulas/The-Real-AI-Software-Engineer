@@ -8,6 +8,7 @@ from langgraph.graph import StateGraph, START
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.messages.utils import count_tokens_approximately
 from langmem.short_term import SummarizationNode
+from langchain_core.messages import HumanMessage, AIMessage
 
 
 def create_system(code_dir, model="gpt-4o-mini"):
@@ -38,15 +39,6 @@ def create_system(code_dir, model="gpt-4o-mini"):
         project_board: dict
         current_sprint: int
 
-    pm_summarize_node = SummarizationNode(
-        token_counter=count_tokens_approximately,
-        model=llm,
-        max_tokens=1024,
-        max_tokens_before_summary=512,
-        max_summary_tokens=512,
-        input_messages_key="pm_messages",
-        output_messages_key="pm_messages",
-    )
     coder_summarize_node = SummarizationNode(
         token_counter=count_tokens_approximately,
         model=llm,
@@ -74,6 +66,9 @@ def create_system(code_dir, model="gpt-4o-mini"):
         input_messages_key="researcher_messages",
         output_messages_key="researcher_messages",
     )
+
+    def aggregate_node(state):
+        return {}
 
     def plan_project(state):
         output = pm.invoke(
@@ -117,17 +112,12 @@ def create_system(code_dir, model="gpt-4o-mini"):
 
         for task in current_sprint_data["tasks"]:
             task_messages = [
-                (
-                    "human",
-                    state["project_scope"],
+                HumanMessage(content=state["project_scope"]),
+                HumanMessage(
+                    content=f"You are working on sprint which goal is: {current_sprint_data['goal']}"
                 ),
-                (
-                    "human",
-                    f"You are working on sprint which goal is: {current_sprint_data['goal']}",
-                ),
-                (
-                    "human",
-                    f"Complete the given task and only this task: {task['task_name']} - {task['task_description']}",
+                HumanMessage(
+                    content=f"Complete the given task and only this task: {task['task_name']} - {task['task_description']}"
                 ),
             ]
 
@@ -161,10 +151,14 @@ def create_system(code_dir, model="gpt-4o-mini"):
                 )
                 new_researcher_msgs.append(output["messages"][-1])
                 new_coder_msgs.append(
-                    ("ai", f"Research results: {output["messages"][-1].content}")
+                    AIMessage(
+                        content=f"Research results: {output["messages"][-1].content}"
+                    )
                 )
                 new_documenter_msgs.append(
-                    ("ai", f"Research results: {output["messages"][-1].content}")
+                    AIMessage(
+                        content=f"Research results: {output["messages"][-1].content}"
+                    )
                 )
 
             else:
@@ -181,24 +175,25 @@ def create_system(code_dir, model="gpt-4o-mini"):
     graph_builder.add_node("start_sprint", start_sprint)
     graph_builder.add_node("complete_tasks", complete_tasks)
 
-    graph_builder.add_node("pm_summarize_node", pm_summarize_node)
     graph_builder.add_node("coder_summarize_node", coder_summarize_node)
     graph_builder.add_node("documenter_summarize_node", documenter_summarize_node)
     graph_builder.add_node("researcher_summarize_node", researcher_summarize_node)
+    graph_builder.add_node("aggregate_node", aggregate_node)
 
     graph_builder.add_edge(START, "plan_project")
     graph_builder.add_conditional_edges(
         "plan_project", should_start_sprint, ["start_sprint", "__end__"]
     )
-    graph_builder.add_edge("start_sprint", "pm_summarize_node")
     graph_builder.add_edge("start_sprint", "coder_summarize_node")
     graph_builder.add_edge("start_sprint", "documenter_summarize_node")
     graph_builder.add_edge("start_sprint", "researcher_summarize_node")
 
-    graph_builder.add_edge("pm_summarize_node", "complete_tasks")
-    graph_builder.add_edge("coder_summarize_node", "complete_tasks")
-    graph_builder.add_edge("documenter_summarize_node", "complete_tasks")
-    graph_builder.add_edge("researcher_summarize_node", "complete_tasks")
+    graph_builder.add_edge("coder_summarize_node", "aggregate_node")
+    graph_builder.add_edge("documenter_summarize_node", "aggregate_node")
+    graph_builder.add_edge("researcher_summarize_node", "aggregate_node")
+
+    graph_builder.add_edge("aggregate_node", "complete_tasks")
+
     graph_builder.add_conditional_edges(
         "complete_tasks", should_start_sprint, ["start_sprint", "__end__"]
     )

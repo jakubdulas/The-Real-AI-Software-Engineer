@@ -5,6 +5,8 @@ from ai.tot.v1.graph import graph as tot_v1
 from ai.tot.v2.graph import graph as tot_v2
 from ai.cot.graph import cot_graph
 from ai.agents.system.graph import create_system
+import time, json
+from langchain_community.callbacks import get_openai_callback
 
 
 def get_agent():
@@ -85,10 +87,33 @@ else:
         st.session_state.messages.append({"role": "user", "content": prompt})
 
         with st.spinner(text="Generating..."):
-            output = st.session_state.coder.invoke(
-                {"project_scope": prompt},
-                config={"configurable": {"thread_id": 3}, "recursion_limit": 100},
-            )
+            with get_openai_callback() as cb:
+                start = time.time()
+                output = st.session_state.coder.invoke(
+                    {"project_scope": prompt},
+                    config={"configurable": {"thread_id": 3}, "recursion_limit": 100},
+                )
+                end = time.time()
+
+                with open(
+                    os.path.join(
+                        st.session_state.selected_directory,
+                        ".project",
+                        "test_data.json",
+                    ),
+                    "w+",
+                ) as f:
+                    json.dump(
+                        {
+                            "execution_time": end - start,
+                            "total_tokens": cb.total_tokens,
+                            "prompt_tokens": cb.prompt_tokens,
+                            "completion_tokens": cb.completion_tokens,
+                            "total_cost_usd": cb.total_cost,
+                            "prompt": prompt,
+                        },
+                        f,
+                    )
 
         if output["researcher_messages"]:
             with st.chat_message("assistant"):
