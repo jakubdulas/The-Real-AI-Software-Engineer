@@ -2,9 +2,7 @@
 
 ## Key changes
 
-- Improved prompts, especially coder system and tools prompts.
-- Sharing the output from researcher to documenter.
-- Removing backlog for PM.
+- Conversation summary
 
 ### Metrics
 
