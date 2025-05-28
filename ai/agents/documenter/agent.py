@@ -42,6 +42,7 @@ Write very detailed documentation to each file.
 Document the code step by step, read -> understand -> document. Take another file and read -> understand. If necessery create file structure
 and others. But if you can see imports from different files go to these files but also one by one. So read -> read parent -> (do it as you go to the main file) -> document.
 Then go to the childs. If you can see import that is in the project structure and it is not documented, then go to this file first then document the rest.
+Remember to save all of the documentation to the files.
 
 Project structure (code):
 {structure}
@@ -73,19 +74,26 @@ Documentation structure:
 if __name__ == "__main__":
     documenter = Documenter(
         "gpt-4o",
-        "/Users/jakubdulas/Documents/InternetStars/Velara/VelaraBackend",
+        "/Users/jakubdulas/Documents/NextProcure/offers-analyzer-demo/src/ai_processor",
         # "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
-        "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/docs",
-        skip_dirs=["venv", "migrations"],
+        "/Users/jakubdulas/Documents/NextProcure/offers-analyzer-demo/docs/ai_processor",
+        skip_dirs=["kuba"],
     )
     state = documenter.invoke(
-        {"messages": [("human", "Document the whole code.")]},
+        {
+            "messages": [
+                (
+                    "human",
+                    """Document the whole code given in the directories. Be detailed and descirbe the workflow and describe the algorithms. Make some diagrams when applicable.""",
+                )
+            ]
+        },
         config={
             "recursion_limit": 1000,
             "configurable": {
-                "working_dir": "/Users/jakubdulas/Documents/InternetStars/Velara/VelaraBackend",
+                "working_dir": "/Users/jakubdulas/Documents/NextProcure/offers-analyzer-demo/src/ai_processor",
                 # "working_dir": "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/ai",
-                "documentation_dir": "/Users/jakubdulas/Documents/UPV/The-Real-AI-Software-Engineer/docs",
+                "documentation_dir": "/Users/jakubdulas/Documents/NextProcure/offers-analyzer-demo/docs/ai_processor",
             },
         },
     )
