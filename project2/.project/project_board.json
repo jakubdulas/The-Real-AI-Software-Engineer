@@ -1,86 +1,72 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Establish core foundation and modules for the command-line note manager. Implement Note class, storage handling, and initial menu structure.",
+      "goal": "Set up project structure and implement note data model.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Design and implement a Note class in note.py with title, content, timestamp, and necessary methods for serialization/deserialization.",
-          "task_name": "Implement the Note class in note.py",
+          "task_description": "Create the initial project directory and empty Python files according to the planned modular structure.",
+          "task_name": "Set up project folder structure with main.py, note.py, storage.py, and utils.py files",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Build out the starting terminal interface in main.py, including a menu and basic input capturing. No note operations need to actually work yet, just stub functions and menu rendering.",
-          "task_name": "Set up the initial menu structure and basic command-line interface in main.py",
+          "task_description": "Design and implement a Note class containing title, content, and timestamp attributes, with relevant initialization and methods for serialization (to_dict, from_dict).",
+          "task_name": "Implement Note class in note.py",
           "id": 2,
           "done": false
         },
         {
-          "assignee": "Coder",
-          "task_description": "Implement helper functions needed for input validation and timestamp formatting in utils.py. Identify reusable utilities that can support the project.",
-          "task_name": "Create helper functions in utils.py",
+          "assignee": "Researcher",
+          "task_description": "Discover best patterns for structure, input handling, and JSON serialization/deserialization for CLI Python apps to apply in implementation.",
+          "task_name": "Research best practices for modular Python CLI apps and JSON serialization",
           "id": 3,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Create functions in storage.py to save notes to a JSON file and load them back, including error handling. Functions should work with Note objects and handle file not found or invalid JSON gracefully.",
-          "task_name": "Implement storage handling in storage.py",
-          "id": 4,
           "done": false
         }
       ]
     },
     "Sprint 2": {
-      "goal": "Connect all core modules. Enable note creation, deletion, viewing, and persistent storage through the command-line menu.",
+      "goal": "Implement storage and basic CLI for note management (add, view, delete notes).",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Connect input flow in main.py to create Note objects and persist them using functions in storage.py. Add input validation with utils.py. Enable creating and saving a new note from the menu.",
-          "task_name": "Integrate Note and storage modules for note creation in main.py",
+          "task_description": "Create utility functions, such as input validation and timestamp formatting, to support the main CLI and module logic.",
+          "task_name": "Implement helper functions in utils.py",
+          "id": 4,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Develop the terminal menu system for adding, viewing, and deleting notes. Integrate with storage and note modules and ensure a clear separation between user interaction and business logic.",
+          "task_name": "Implement CLI and menu logic in main.py",
           "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Enable listing and viewing existing notes using data loaded via storage.py. Format display to show title, timestamp, and provide access to note details.",
-          "task_name": "Implement viewing of notes in main.py",
+          "task_description": "Write functions for saving notes to and loading notes from a JSON file. Ensure data integrity and proper error handling.",
+          "task_name": "Implement storage logic in storage.py",
           "id": 6,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Review and refactor the codebase to ensure logic and user interface are cleanly separated as per best practices. Ensure code modularity and maintainability.",
-          "task_name": "Refactor for logic/UI separation and clean code structure",
-          "id": 7,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Implement functionality so users can select and delete notes. Update storage and the menu after deletion, with input validation for safe user actions.",
-          "task_name": "Enable deletion of notes in main.py",
-          "id": 8,
           "done": false
         }
       ]
     },
     "Sprint 3": {
-      "goal": "Document the codebase, usage, and module responsibilities.",
+      "goal": "Code review, testing, and final documentation for note manager app.",
       "tasks": [
         {
           "assignee": "Documenter",
-          "task_description": "Provide clear usage instructions and internal documentation for main.py, covering how to operate the menu, input requirements, and the flow between modules.",
-          "task_name": "Document the main.py interface and usage",
-          "id": 9,
+          "task_description": "Document each module (main.py, note.py, storage.py, utils.py) and prepare a README file with setup and usage instructions.",
+          "task_name": "Document all modules and create README",
+          "id": 7,
           "done": false
         },
         {
-          "assignee": "Documenter",
-          "task_description": "Write comprehensive documentation for note.py, storage.py, and utils.py, including module purpose, method/class docstrings, and usage examples where necessary.",
-          "task_name": "Generate documentation for Note, storage, and utility modules",
-          "id": 10,
+          "assignee": "Coder",
+          "task_description": "Manually or programmatically test the main functionalities and edge cases for the command-line menu, storage, and note serialization. Validate input handling and error messages.",
+          "task_name": "Test core functionalities (add, delete, view notes) in CLI",
+          "id": 8,
           "done": false
         }
       ]
@@ -88,6 +74,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 10
+    "num_tasks": 7
   }
 }

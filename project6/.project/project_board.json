@@ -1,79 +1,74 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Set up the project structure and create basic UI for the weather app.",
+      "goal": "Implement basic frontend structure, user input, and weather data fetching for the weather app.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Set up a new project with the base HTML structure, a CSS file for styling, and a JavaScript file for logic.",
-          "task_name": "Create project directory and boilerplate files (index.html, style.css, app.js).",
+          "task_description": "Design and code a simple HTML page containing a city input field, a button to trigger weather fetching, and placeholder sections for displaying weather data and error messages.",
+          "task_name": "Create basic HTML layout for the weather app",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Create a simple and clean HTML form for the city input and display area for weather data. Use CSS to provide basic styling and layout.",
-          "task_name": "Design and implement the basic UI layout in HTML and CSS.",
+          "task_description": "Develop simple CSS to style the weather app: position input, button, output sections, and ensure reasonable responsiveness and user experience.",
+          "task_name": "Create basic CSS for layout and responsiveness",
           "id": 2,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Set up JavaScript modules or structure functions for separate concerns: one for handling UI updates, one for API requests, but do not implement logic yet.",
-          "task_name": "Prepare modular JavaScript structure for UI and API logic.",
+          "task_description": "Write a modular JavaScript file/function responsible for making API calls to OpenWeatherMap or another free weather API. Expose a function getWeather(city) that fetches and returns weather data for a given city.",
+          "task_name": "Create JavaScript module for weather API requests",
           "id": 3,
           "done": false
-        }
-      ]
-    },
-    "Sprint 2": {
-      "goal": "Implement core weather data fetching logic, UI updates, and error handling.",
-      "tasks": [
+        },
         {
           "assignee": "Coder",
-          "task_description": "Use JavaScript to connect to the OpenWeatherMap API, fetch current weather based on user input, and parse the response.",
-          "task_name": "Implement API request logic for fetching weather data.",
+          "task_description": "Write JavaScript to connect the input, button, and modules for API requests and UI updates. Ensure the app fetches and displays weather or shows errors when the city is not found.",
+          "task_name": "Wire up event listeners and integrate modules",
           "id": 4,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Write the logic to display temperature, humidity, and conditions in the UI area using data from the API response.",
-          "task_name": "Implement function to update UI with fetched weather data.",
+          "task_description": "Write a modular JavaScript file/function that updates the DOM with fetched weather data or error messages. Include functions to render weather information, display errors, and clear previous results.",
+          "task_name": "Create JavaScript module for handling UI updates",
           "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Wire up the city input and button/form in the HTML so that submitting triggers weather data fetching and UI update.",
-          "task_name": "Add form event handling to trigger weather fetch on city input.",
+          "task_description": "Implement logic to detect invalid city names based on API response and trigger the UI error message mechanism.",
+          "task_name": "Handle invalid city names and display user-friendly errors",
           "id": 6,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Detect invalid API responses (e.g., city not found) and update the UI to show an error message instead of weather data.",
-          "task_name": "Handle invalid city names and display user-friendly error messages.",
-          "id": 7,
           "done": false
         }
       ]
     },
-    "Sprint 3": {
-      "goal": "Refine UI and document the codebase.",
+    "Sprint 2": {
+      "goal": "Finalize, test, and document the weather app implementation.",
       "tasks": [
         {
           "assignee": "Documenter",
-          "task_description": "Generate comprehensive documentation for all JavaScript modules/functions, as well as a usage guide for the app.",
-          "task_name": "Document all code and provide usage instructions.",
+          "task_description": "Create a README or documentation file that explains the app features, code structure, how to use it, and describes each module/file. Include configuration instructions for API keys if necessary.",
+          "task_name": "Write documentation for the weather app code and usage",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Test the app thoroughly: valid/invalid city input, empty input, repeated searches, API downtime. Confirm user-facing error handling and UI updates function as intended across scenarios.",
+          "task_name": "Test the weather app in the browser",
           "id": 8,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Refine the styles to ensure the app looks good on all screen sizes and is visually appealing.",
-          "task_name": "Polish CSS for improved responsive and aesthetic design.",
-          "id": 9,
+          "task_description": "Review all frontend code to ensure good readability, add inline comments explaining key logic sections, and remove any unnecessary code or debugging statements.",
+          "task_name": "Clean up code and add code comments for clarity",
+          "id": 8,
           "done": false
         }
       ]
@@ -81,6 +76,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 9
+    "num_tasks": 8
   }
 }

@@ -1,92 +1,94 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Establish core game components and implement base gameplay loop for terminal-based Tic Tac Toe in Python.",
+      "goal": "Set up the foundational classes and game logic for a terminal-based Tic Tac Toe game in Python, supporting both human and AI players.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Create a Board class responsible for maintaining the state of the Tic Tac Toe board, displaying it in ASCII, managing moves, and checking occupancy for move validation. The class should be self-contained and expose methods needed by the game logic.",
-          "task_name": "Design and implement Board class",
+          "task_description": "Create a Board class with methods to display the board in ASCII, update cell status, and check if a move is valid. Methods should include displaying the board, resetting, and checking for cell occupancy.",
+          "task_name": "Implement the Board class for Tic Tac Toe",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Create a Player class for human players. The class should manage player symbols (X or O) and store player-related information. It should provide a method to request and validate input from a human player.",
-          "task_name": "Design and implement Player class",
+          "task_description": "Create a Player class to represent each player (human or AI). This class should store player name, symbol ('X' or 'O'), and determine if the player is human or AI.",
+          "task_name": "Implement the Player class for Tic Tac Toe",
           "id": 2,
           "done": false
         },
         {
-          "assignee": "Coder",
-          "task_description": "Develop the Game Logic to allow two human players to alternately make moves, use the Board and Player classes, and display the board after each move. The loop should continue until a win or draw is detected (check for completion).",
-          "task_name": "Implement basic game loop (two human players, no AI)",
+          "assignee": "Researcher",
+          "task_description": "Identify simple but effective strategies for implementing a basic AI in Tic Tac Toe. Focus on random moves and detecting immediate wins or blocks.",
+          "task_name": "Research simple AI strategies for Tic Tac Toe in Python",
           "id": 3,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Enhance the Board or Game Logic to check for winning conditions (rows, columns, diagonals) and detect draws. Integrate mechanisms to end the game accordingly.",
-          "task_name": "Implement game win/draw detection",
+          "task_description": "Develop a Game Logic class to handle the main game flow: starting a game, alternating turns, prompting input, validating moves, ending the game, and resetting. Should allow for 2 human players or one player vs AI.",
+          "task_name": "Implement the Game Logic class/controller",
           "id": 4,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Update Board and Player classes so that all user input is validated. Ensure players cannot make a move in an occupied cell or provide invalid input, and prompts should handle errors gracefully.",
-          "task_name": "Validate and handle illegal moves",
+          "task_description": "Add functions/methods to collect and validate input from players, ensuring moves are within bounds and cells are not already occupied. Should prompt for new input if invalid.",
+          "task_name": "Implement input validation for player moves",
           "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Revise all implemented classes and functions to add comments explaining their role and usage. Ensure the code is easy to understand and clearly structured for further extensibility.",
-          "task_name": "Add class/function structure comments and improve code readability",
+          "task_description": "Develop functions to check the current board state after each move for a win or draw. Ensure that the game ends and notifies the players appropriately when a win or draw is detected.",
+          "task_name": "Implement win and draw detection logic",
           "id": 6,
           "done": false
-        }
-      ]
-    },
-    "Sprint 2": {
-      "goal": "Add AI player functionality and allow mode selection between two-player and player-vs-AI modes.",
-      "tasks": [
+        },
         {
           "assignee": "Coder",
-          "task_description": "Create a basic AI Player class that can make legal moves automatically. The AI should use simple logic, like selecting a random empty cell. Integrate it to work with the existing Board and Game Logic.",
-          "task_name": "Implement simple AI Player class",
+          "task_description": "Using the research on basic AI strategies, implement an AI player that can make random valid moves, block immediate wins, or take immediate wins if possible.",
+          "task_name": "Implement a simple AI for Tic Tac Toe based on research",
           "id": 7,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Extend the game startup logic to allow the user to choose between playing against another human player or the AI. Ensure the game initializes the correct player objects based on selection and that the main loop supports both modes.",
-          "task_name": "Allow player to select game mode (Human vs Human or Human vs AI)",
+          "task_description": "Connect all components (Player, Board, AI, and Game Logic) into a cohesive main function or Game class. Ensure the user can choose to play either 2-player or vs. AI mode at startup.",
+          "task_name": "Integrate Player, Board, and AI into Main Game class",
           "id": 8,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Document the AI Player class and mode selection code with clear comments. Add extensibility notes for how to improve the AI logic or add new player types.",
-          "task_name": "Add code comments and extendibility notes for AI and game mode selection",
-          "id": 9,
           "done": false
         }
       ]
     },
-    "Sprint 3": {
-      "goal": "Document the codebase, including gameplay, classes and extensibility notes for future development.",
+    "Sprint 2": {
+      "goal": "Test, document, and provide instructions for the Tic Tac Toe game code.",
       "tasks": [
         {
-          "assignee": "Documenter",
-          "task_description": "Create a section in the documentation file to guide human players on how to start the game, select modes, make moves, and understand win/draw conditions.",
-          "task_name": "Document gameplay instructions for players",
+          "assignee": "Coder",
+          "task_description": "Add clear and concise comments throughout the code, especially around class structures, functions, and key logic decisions. Ensure the code is easy for others to read and extend.",
+          "task_name": "Write code comments and improve readability",
+          "id": 9,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Manually test the Tic Tac Toe game in both two-player and vs. AI modes. Check for correct game flow, input validation, win/draw detection, and proper display. Identify and fix any bugs found.",
+          "task_name": "Test the completed Tic Tac Toe game",
           "id": 10,
           "done": false
         },
         {
           "assignee": "Documenter",
-          "task_description": "Add Python docstrings to classes and functions throughout the codebase to explain their usage, inputs, and outputs. Create a separate documentation file summarizing the code structure and giving guidance for further extension.",
-          "task_name": "Create in-code docstrings and overall code documentation",
+          "task_description": "Add a section in the documentation that outlines how to easily extend the game with new features, such as more advanced AI, GUI, or networking. Provide module and function reference for future extensibility.",
+          "task_name": "Create an 'Extending the Game' section in the documentation",
+          "id": 10,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Create a README file with instructions on how to run the game, overview of features, and explanation of code organization. Add docstrings to the main classes and functions for developer reference.",
+          "task_name": "Document the code with a README and code-level documentation",
           "id": 11,
           "done": false
         }
@@ -95,6 +97,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 10
+    "num_tasks": 11
   }
 }

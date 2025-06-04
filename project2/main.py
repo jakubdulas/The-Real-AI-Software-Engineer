@@ -1,126 +1,97 @@
-"""
-main.py
---------
-Command-line interface and main menu for Note Manager.
-"""
+import sys
+from note import Note
+from storage import load_notes, save_notes
+from utils import validate_non_empty, get_confirmation, format_timestamp
 
-from note_manager import create_note_logic, get_notes_summaries, get_note_detail
-from delete_note import delete_note_logic
-from utils import format_timestamp
+NOTES_FILE = 'notes.json'
 
-
-def format_timestamp_string(timestamp_iso: str) -> str:
-    from datetime import datetime
-
-    try:
-        dt = datetime.fromisoformat(timestamp_iso)
-        return format_timestamp(dt)
-    except Exception:
-        return timestamp_iso
-
-
-def create_note_ui():
-    print("\n-- Create a New Note --")
-    title = input("Title: ").strip()
-    content = input("Content: ").strip()
-    err = create_note_logic(title, content)
-    if err:
-        print(f"Error: {err}")
-        return
-    print(f"Note '{title}' created successfully.")
-
-
-def list_and_view_notes_ui():
-    print("\n-- Your Notes --")
-    summaries = get_notes_summaries()
-    if not summaries:
-        print("No notes found.")
-        return
-    for summary in summaries:
-        print(
-            f"{summary['index']}. {summary['title']} [{format_timestamp_string(summary['timestamp'])}]"
-        )
-    try:
-        choice = input("Select note number to view details (Enter to cancel): ").strip()
-        if not choice:
-            return
-        index = int(choice) - 1
-        if index < 0 or index >= len(summaries):
-            print("Invalid selection.")
-            return
-        note = get_note_detail(index)
-        if note is None:
-            print("Note not found.")
-            return
-        print("\n--- Note Details ---")
-        print(f"Title     : {note.title}")
-        print(f"Timestamp : {format_timestamp_string(note.timestamp)}")
-        print(f"Content   :\n{note.content}\n")
-    except ValueError:
-        print("Invalid input. Please enter a valid note number.")
-
-
-def delete_note_ui():
-    print("\n-- Delete a Note --")
-    summaries = get_notes_summaries()
-    if not summaries:
-        print("No notes available to delete.")
-        return
-    for summary in summaries:
-        print(
-            f"{summary['index']}. {summary['title']} [{format_timestamp_string(summary['timestamp'])}]"
-        )
-    try:
-        choice = input("Select note number to delete (Enter to cancel): ").strip()
-        if not choice:
-            return
-        index = int(choice) - 1
-        if index < 0 or index >= len(summaries):
-            print("Invalid selection.")
-            return
-        confirm = (
-            input(
-                f"Are you sure you want to delete note '{summaries[index]['title']}'? (y/N): "
-            )
-            .strip()
-            .lower()
-        )
-        if confirm != "y":
-            print("Deletion cancelled.")
-            return
-        err = delete_note_logic(index)
-        if err:
-            print(f"Error: {err}")
-        else:
-            print("Note deleted successfully.")
-    except ValueError:
-        print("Invalid input. Please enter a valid note number.")
-
-
-def main_menu():
+def display_menu():
+    print("\n--- Command Line Note Manager ---")
+    print("1. Add Note")
+    print("2. View Notes")
+    print("3. Delete Note")
+    print("4. Exit")
+    
+def prompt_choice():
     while True:
-        print("\n=== Note Manager ===")
-        print("1. Create note")
-        print("2. List/View notes")
-        print("3. Delete note")
-        print("4. Exit")
         choice = input("Select an option (1-4): ").strip()
-        if choice == "1":
-            create_note_ui()
-        elif choice == "2":
-            list_and_view_notes_ui()
-        elif choice == "3":
-            delete_note_ui()
-        elif choice == "4":
-            print("Exiting Note Manager. Goodbye!")
-            break
-        else:
-            print("Invalid selection. Please try again.")
+        if choice in {'1', '2', '3', '4'}:
+            return choice
+        print("Invalid input. Please enter a number between 1 and 4.")
 
+def add_note(notes):
+    print("\n--- Add Note ---")
+    title = validate_non_empty(input("Title: "), "Title cannot be empty.")
+    content = validate_non_empty(input("Content: "), "Content cannot be empty.")
+    note = Note(title=title, content=content)
+    notes.append(note)
+    save_notes(NOTES_FILE, notes)
+    print("Note added!")
+
+def view_notes(notes):
+    print("\n--- Notes ---")
+    if not notes:
+        print("No notes available.")
+        return
+    for idx, note in enumerate(notes, start=1):
+        print(f"{idx}. [{format_timestamp(note.timestamp)}] {note.title}")
+    detail = input("\nEnter note number to view details, or press Enter to return: ").strip()
+    if detail.isdigit():
+        idx = int(detail) - 1
+        if 0 <= idx < len(notes):
+            note = notes[idx]
+            print(f"\nTitle: {note.title}")
+            print(f"Timestamp: {format_timestamp(note.timestamp)}")
+            print(f"Content:\n{note.content}\n")
+        else:
+            print("Invalid note number.")
+
+def delete_note(notes):
+    print("\n--- Delete Note ---")
+    if not notes:
+        print("No notes to delete.")
+        return
+    for idx, note in enumerate(notes, start=1):
+        print(f"{idx}. [{format_timestamp(note.timestamp)}] {note.title}")
+    to_del = input("Enter note number to delete (or press Enter to cancel): ").strip()
+    if not to_del:
+        print("Deletion cancelled.")
+        return
+    if to_del.isdigit():
+        idx = int(to_del) - 1
+        if 0 <= idx < len(notes):
+            note = notes[idx]
+            if get_confirmation(f"Are you sure you want to delete note '{note.title}'?"):
+                notes.pop(idx)
+                save_notes(NOTES_FILE, notes)
+                print("Note deleted.")
+            else:
+                print("Deletion cancelled.")
+        else:
+            print("Invalid note number.")
+    else:
+        print("Invalid input.")
 
 def main():
-    main_menu()
+    try:
+        notes = load_notes(NOTES_FILE)
+    except Exception as e:
+        print(f"Failed to load notes: {e}")
+        notes = []
 
+    while True:
+        display_menu()
+        choice = prompt_choice()
+        if choice == '1':
+            add_note(notes)
+        elif choice == '2':
+            view_notes(notes)
+        elif choice == '3':
+            delete_note(notes)
+        elif choice == '4':
+            print("Exiting.")
+            save_notes(NOTES_FILE, notes)
+            sys.exit(0)
 
 if __name__ == "__main__":
     main()

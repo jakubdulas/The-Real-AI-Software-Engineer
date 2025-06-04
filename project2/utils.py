@@ -1,28 +1,29 @@
-from datetime import datetime
-from typing import Dict, List, Any
+import datetime
 
-def validate_input(data: Dict[str, Any], required_fields: List[str]) -> bool:
-    """
-    Validate that all required fields are present and non-empty in the data dict.
+def validate_non_empty(prompt):
+    """Prompt the user and ensure the input is not empty."""
+    while True:
+        value = input(prompt).strip()
+        if value:
+            return value
+        print("Input cannot be empty. Please try again.")
 
-    Args:
-        data (Dict[str, Any]): Input data to validate.
-        required_fields (List[str]): Keys that must exist and be non-empty in data.
-    Returns:
-        bool: True if all fields are valid, False otherwise.
-    """
-    for field in required_fields:
-        if field not in data or data[field] is None or (isinstance(data[field], str) and not data[field].strip()):
-            return False
-    return True
-
-def format_timestamp(dt: datetime) -> str:
-    """
-    Format a datetime object into a human-readable timestamp string.
-
-    Args:
-        dt (datetime): The datetime object to format.
-    Returns:
-        str: Formatted timestamp string (e.g., '2024-06-07 14:03:02').
-    """
+def format_timestamp(dt):
+    """Format a datetime object as a readable string."""
+    if isinstance(dt, str):
+        # Already formatted or ISO string
+        try:
+            dt = datetime.datetime.fromisoformat(dt)
+        except ValueError:
+            return dt
     return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+def get_confirmation(prompt="Are you sure? (y/n): "):
+    """Prompt the user for a yes/no confirmation."""
+    while True:
+        response = input(prompt).strip().lower()
+        if response in ("y", "yes"):
+            return True
+        elif response in ("n", "no"):
+            return False
+        print("Please enter 'y' or 'n'.")

@@ -1,19 +1,18 @@
 """
 main.py
--------
-This is the main entry point for the FastAPI backend of the TODO application.
-It defines the FastAPI application instance and the root endpoint.
+---------
+Entry point for the FastAPI TODO backend.
+
+This script initializes the FastAPI application and includes the API routes for managing TODO tasks.
+
+How it works:
+- Imports and creates a FastAPI application (`app`).
+- Imports the task API router from `api/tasks.py` and includes it in the app, mounting all task endpoints (`/tasks`).
 """
 
 from fastapi import FastAPI
+from api.tasks import router as tasks_router
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    """
-    Root endpoint for the API.
-
-    Returns a welcome message to verify the API is running.
-    """
-    return {"message": "Welcome to the TODO API"}
+app.include_router(tasks_router)

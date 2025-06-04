@@ -8,18 +8,16 @@ from .prompts import coder_system_prompt
 from .tools import tools
 from operator import or_
 from .utils import create_directory_tree
+from langgraph.prebuilt import create_react_agent
 
 
 class CoderAgentState(TypedDict):
     project_tree: Annotated[dict, or_]
 
 
-class Coder(SyncAgent):
-    def __init__(self, working_dir, llm="gpt-4o", reasoning_graph=cot_graph):
-        print("RESONING GRAPH", reasoning_graph)
-        super().__init__(
-            CoderAgentState, llm, coder_system_prompt, tools, reasoning_graph
-        )
+class Coder:
+    def __init__(self, working_dir, llm="gpt-4o"):
+        self.graph = create_react_agent(llm, tools, prompt=coder_system_prompt)
         self.working_dir = working_dir
 
     def invoke(self, *args, **kwargs):
@@ -27,7 +25,7 @@ class Coder(SyncAgent):
         if "config" in kwargs:
             if "configurable" in kwargs["config"]:
                 kwargs["config"]["configurable"]["working_dir"] = self.working_dir
-        return super().invoke(*args, **kwargs)
+        return self.graph.invoke(*args, **kwargs)
 
 
 if __name__ == "__main__":

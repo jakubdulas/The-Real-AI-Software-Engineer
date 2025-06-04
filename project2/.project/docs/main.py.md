@@ -1,76 +1,66 @@
-# main.py Documentation
+# main.py
 
 ## Overview
+`main.py` provides the command-line interface (CLI) for the note manager application. It manages the interactive menu, user input, and delegates note creation, viewing, and deletion to supporting modules. This module acts as the orchestrator, ensuring a clean separation between the user interface and the underlying logic/data storage.
 
-`main.py` is the entry point for the command-line Note Manager application. It provides a simple terminal-based menu allowing users to create, view, and delete notes. This module interacts with the core logic and data storage modules to facilitate operation without exposing internal implementation details to the user.
+---
 
-## Module Responsibilities
-- Display the main (and sub-) menu to the user.
-- Gather and validate user input.
-- Call logic functions from supporting modules to handle notes.
-- Format and display output to the terminal.
+## Main Functions and Flow
 
-## Menu Structure
-Upon running the program, users interact with a looping, numbered menu:
+### display_menu()
+Prints the main menu with options to add, view, delete notes, or exit.
 
-```
-=== Note Manager ===
-1. Create note
-2. List/View notes
-3. Delete note
-4. Exit
-Select an option (1-4):
-```
+### prompt_choice()
+Prompts the user to select a menu option (numbers 1-4), performing input validation and returning the validated choice as a string.
 
-- **Create note**: Prompts for a note title and content, then saves.
-- **List/View notes**: Lists existing notes, lets user view details by selecting a number.
-- **Delete note**: Lists notes, lets user choose one to delete (with confirmation prompt).
-- **Exit**: Closes the application.
+### add_note(notes)
+Handles the process of adding a new note:
+- Prompts the user for a title and content using input validation.
+- Instantiates a new `Note`.
+- Appends the note to the notes list and saves the updated list via `save_notes`.
 
-## Usage Instructions
+### view_notes(notes)
+Displays all notes in a numbered list with timestamps and titles.
+- Allows the user to input a note number to view its details.
 
-### Launching the Application
-To start the note manager, from your terminal run:
+### delete_note(notes)
+Handles note deletion:
+- Displays the list of notes with numbers.
+- Prompts for a note number to delete; confirms the deletion with the user.
+- Removes the note and updates storage if confirmed.
 
+### main()
+The entry point:
+- Loads notes from storage (using `load_notes` from `storage.py`).
+- Enters the main loop, displaying the menu and handling user-selected actions.
+- Saves all changes before exiting.
+
+---
+
+## Design and Implementation Details
+- Imports the following modules:
+  - `note` for the `Note` class
+  - `storage` for note persistence
+  - `utils` for input validation, confirmation, and timestamp formatting
+- Persistent file is hardcoded as `notes.json` in the current directory.
+- Ensures robust input validation and error handling for all actions.
+- User-friendly prompts and clear feedback on all actions.
+
+---
+
+## Example usage
 ```bash
 python main.py
 ```
 
-### Creating a Note
-1. Select option `1` from the main menu.
-2. Input a title (required, must not be empty).
-3. Input the content (optional, can be empty).
-4. On error (e.g. duplicate or blank title), an error message displays.
+---
 
-### Listing & Viewing Notes
-1. Select option `2`.
-2. A numbered list of notes (with titles and timestamps) appears.
-3. Enter the note number to view its details, or press Enter to cancel.
-4. If an invalid number is entered, you are prompted again.
-5. Details displayed include title, content, and timestamp.
+## Dependencies
+- `note.py` — Data model for notes
+- `storage.py` — Functions for loading and saving notes
+- `utils.py` — Input and formatting helpers
+- Standard: `sys`
 
-### Deleting a Note
-1. Select option `3`.
-2. Notes are listed; select a note's number to delete, or press Enter to cancel.
-3. A confirmation prompt appears; type `y` to confirm, any other key to cancel.
-4. Success/failure feedback is displayed.
+---
 
-## Input Validation
-- Menu options must be integers 1–4; invalid entries prompt user to retry.
-- Note indexes are 1-based; invalid selections (out of range, not a number) are handled gracefully.
-- Delete/view operations can be cancelled by pressing Enter.
-
-## Internal Flow and Module Collaboration
-- **Menu/UI functions** in `main.py` (`create_note_ui()`, `list_and_view_notes_ui()`, `delete_note_ui()`) handle all user interaction and output.
-- **Core Note Logic** is delegated to `note_manager` and `delete_note` modules, which perform note creation, retrieval, and deletion. Return values are checked for success/errors.
-- **Format Helpers**: `format_timestamp` from `utils.py` is called to display timestamps in a user-friendly format.
-- Validation and error handling are present throughout to ensure a robust CLI experience.
-
-## Main Functions
-- `main_menu()`: Primary event loop, presents the main menu and dispatches selected actions.
-- `main()`: Entrypoint, calls the menu loop.
-- Each UI function is responsible for interacting with the user and calling the appropriate backend logic.
-
-----
-
-*For further details on how notes are structured, saved, or manipulated, refer to the documentation for `note.py`, `storage.py`, and `utils.py`.*
+This module acts as the primary interface for users, delegating logic and persistence to external modules for a modular and maintainable design.

@@ -1,21 +1,11 @@
-# TODO List Backend
+# TODO List Backend (FastAPI)
 
-This is the backend REST API for the TODO list application, built with FastAPI.
+## Structure
 
-## Setup Instructions
+- `main.py`: Entry point for FastAPI app.
+- `models/`: Database models and ORM definitions.
+- `schemas/`: Pydantic schemas for data validation.
+- `api/`: Endpoint routers and API logic.
+- `requirements.txt`: Python dependencies.
 
-1. **Install Python 3.8+**
-2. (Recommended) Create a virtual environment:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Run the API server:**
-   ```bash
-   uvicorn main:app --reload
-   ```
-   Access the interactive docs at: http://127.0.0.1:8000/docs
+## How to run (will be documented further after implementation)

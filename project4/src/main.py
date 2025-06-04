@@ -1,56 +1,47 @@
 import sys
 import pygame
-from game import Game
-from renderer import Renderer
+from game import SnakeGame
+import renderer
+import input_handler
 
-# Constants
-grid_size = 20  # Number of cells per row/column
-grid_cell_size = 24  # Pixel size of each grid cell
-window_size = grid_size * grid_cell_size
-
+CELL_SIZE = renderer.CELL_SIZE
+GRID_SIZE = 20
+WINDOW_SIZE = CELL_SIZE * GRID_SIZE
+FPS = 10
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((window_size, window_size))
-    pygame.display.set_caption("Snake Game")
+    window = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+    pygame.display.set_caption("Snake")
     clock = pygame.time.Clock()
-    renderer = Renderer(screen, grid_cell_size, grid_size, grid_size)
+    font = pygame.font.SysFont("arial", 24)
+    game = SnakeGame(GRID_SIZE)
     
-    def reset_game():
-        return Game(grid_size)
-
-    game = reset_game()
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if game.game_over:
-                    if event.key == pygame.K_ESCAPE:
-                        running = False
-                    if event.key == pygame.K_r:
-                        game = reset_game()
-                else:
-                    if event.key == pygame.K_UP:
-                        game.snake.set_direction((0, -1))
-                    elif event.key == pygame.K_DOWN:
-                        game.snake.set_direction((0, 1))
-                    elif event.key == pygame.K_LEFT:
-                        game.snake.set_direction((-1, 0))
-                    elif event.key == pygame.K_RIGHT:
-                        game.snake.set_direction((1, 0))
-
-        if not game.game_over:
+            new_dir = input_handler.get_direction_from_event(event)
+            if new_dir is not None:
+                game.update_direction(new_dir)
+        if game.is_alive():
             game.update()
-        
-        renderer.render(game)
+        window.fill(renderer.BG_COLOR)
+        renderer.draw_grid(window, GRID_SIZE)
+        renderer.draw_snake(window, game.get_snake())
+        renderer.draw_apple(window, game.get_apple())
+        renderer.draw_score(window, game.get_score(), font)
+        if not game.is_alive():
+            gameover_text = font.render('Game Over! Press ESC to quit.', True, (255, 100, 100))
+            window.blit(gameover_text, (30, WINDOW_SIZE // 2 - 18))
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                running = False
         pygame.display.flip()
-        clock.tick(10)  # 10 frames/sec (snake speed)
-
+        clock.tick(FPS)
     pygame.quit()
     sys.exit()
-
 
 if __name__ == "__main__":
     main()

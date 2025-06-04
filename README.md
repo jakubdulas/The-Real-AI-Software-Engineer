@@ -1,10 +1,8 @@
-# v0.2
+# v1.1
 
 ## Key changes
 
-- Improved prompts, especially coder system and tools prompts.
-- Sharing the output from researcher to documenter.
-- Removing backlog for PM.
+- Disabling reasining
 
 ### Metrics
 

@@ -1,8 +1,6 @@
 from fastapi import FastAPI
+from api.tasks import router as tasks_router
 
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the TODO API"}
+app.include_router(tasks_router)

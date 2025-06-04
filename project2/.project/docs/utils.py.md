@@ -1,38 +1,52 @@
 # utils.py
 
-## Module Purpose
-`utils.py` contains supplementary, reusable helper functions to support operations such as input validation and timestamp formatting, keeping logic clean and separate from domain objects and user interface.
+## Overview
+`utils.py` includes general-purpose utility functions to support the note manager application. These helpers cover input validation, user confirmations, and human-friendly formatting for timestamps.
 
 ## Functions
 
-### validate_input
-```python
-def validate_input(data: Dict[str, Any], required_fields: List[str]) -> bool
-```
-- **data**: Dictionary of input data (e.g., from user input or a form)
-- **required_fields**: List of keys that must exist in `data` and have non-empty values
-- Returns: `True` if all required fields are present and valid, `False` otherwise
-- Strings must be non-empty after stripping; non-string values must not be None.
+### validate_non_empty(prompt)
+- Prompts the user and ensures the input is not empty.
+- Keeps prompting until a non-empty value is entered.
 
-#### Usage Example
+**Parameters:**
+- `prompt` (str): The message to display for input.
+
+**Returns:**
+- `str`: The non-empty user input.
+
+### format_timestamp(dt)
+- Converts a datetime object or ISO 8601 timestamp string to a readable date/time string (`YYYY-MM-DD HH:MM:SS`).
+- If given a string, attempts to parse it as an ISO-format date/time.
+
+**Parameters:**
+- `dt` (str | datetime): The timestamp to format.
+
+**Returns:**
+- `str`: Formatted timestamp or the original input if parsing fails.
+
+### get_confirmation(prompt="Are you sure? (y/n): ")
+- Asks the user for a yes/no confirmation.
+- Only accepts 'y', 'yes', 'n', or 'no' (case-insensitive), keeps prompting otherwise.
+
+**Parameters:**
+- `prompt` (str): The message to display for confirmation. (Optional, default is "Are you sure? (y/n): ")
+
+**Returns:**
+- `bool`: `True` for yes, `False` for no.
+
+## Usage Example
 ```python
-from utils import validate_input
-inputs = {'title': 'T', 'content': 'X'}
-validate_input(inputs, ['title', 'content'])   # True
-validate_input({'title': ''}, ['title'])       # False
+from utils import validate_non_empty, format_timestamp, get_confirmation
+value = validate_non_empty('Enter a title: ')
+formatted = format_timestamp('2024-06-26T14:06:55')
+if get_confirmation('Delete item? '):
+    # proceed
+    pass
 ```
 
-### format_timestamp
-```python
-def format_timestamp(dt: datetime) -> str
-```
-- **dt**: a `datetime` object
-- Returns: a formatted string (e.g., `'2024-06-07 14:03:02'`)
-- Used wherever human-readable timestamps are displayed.
+## Dependencies
+- `datetime` — Standard Python library for date parsing and formatting.
 
-#### Usage Example
-```python
-from utils import format_timestamp
-from datetime import datetime
-print(format_timestamp(datetime.now()))
-```
+---
+The module isolates common UI and conversion patterns to promote clean separation between user interaction and core logic.
