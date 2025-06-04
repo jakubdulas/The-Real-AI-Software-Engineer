@@ -1,17 +1,13 @@
 import datetime
 
 
-def validate_non_empty(prompt, error_message=""):
+def validate_non_empty(prompt):
     """Prompt the user and ensure the input is not empty."""
     while True:
         value = input(prompt).strip()
         if value:
             return value
-        print(
-            "Input cannot be empty. Please try again."
-            if not error_message
-            else error_message
-        )
+        print("Input cannot be empty. Please try again.")
 
 
 def format_timestamp(dt):

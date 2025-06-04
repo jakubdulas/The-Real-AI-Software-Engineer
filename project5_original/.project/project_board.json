@@ -1,0 +1,128 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Develop the backend REST API for the TODO list application, including all CRUD endpoints and data models.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Create the backend/ folder and initialize project structure for the chosen framework (e.g., FastAPI).",
+          "task_name": "Set up backend directory and project structure",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Define the data model for a TODO item with title, status, and optional due date.",
+          "task_name": "Design TODO item data model",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create the API endpoint to list all TODO tasks.",
+          "task_name": "Implement endpoint: GET /tasks",
+          "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create the API endpoint to add a new TODO task.",
+          "task_name": "Implement endpoint: POST /tasks",
+          "id": 4,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create the API endpoint to delete a TODO task by its ID.",
+          "task_name": "Implement endpoint: DELETE /tasks/{id}",
+          "id": 5,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create the API endpoint to update a TODO task (title, status, or due date).",
+          "task_name": "Implement endpoint: PATCH /tasks/{id}",
+          "id": 6,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Build the frontend for the TODO list application, enabling interaction with the backend API (list, create, and delete tasks).",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Create the frontend/ folder and establish the structure for HTML, CSS, and JavaScript files.",
+          "task_name": "Set up frontend directory and project structure",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write JS to retrieve tasks from the backend API and display them in the UI.",
+          "task_name": "Implement JavaScript code to list tasks (GET /tasks)",
+          "id": 8,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write JS to send a new task to the backend and update the UI after creation.",
+          "task_name": "Implement JavaScript code to add tasks (POST /tasks)",
+          "id": 9,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Build the main HTML page that will display and interact with the TODO list.",
+          "task_name": "Develop main HTML interface for TODO app",
+          "id": 10,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write JS to delete a task from the backend via API and update the UI after deletion.",
+          "task_name": "Implement JavaScript code to delete tasks (DELETE /tasks/{id})",
+          "id": 11,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Add minimal styling to ensure the app is user-friendly and visually clear, but keep it basic.",
+          "task_name": "Apply minimal CSS styling to TODO app",
+          "id": 12,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 3": {
+      "goal": "Document the backend and frontend code, and provide instructions for running the project locally.",
+      "tasks": [
+        {
+          "assignee": "Documenter",
+          "task_description": "Add comments and a README file for the frontend explaining project structure and usage.",
+          "task_name": "Document frontend code",
+          "id": 13,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Create a main README file at the root of the project, explaining how to set up and run both backend and frontend locally, and listing prerequisites (e.g., Python, pip, any JS dependencies).",
+          "task_name": "Write project-level README with setup and run instructions",
+          "id": 14,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Write docstrings and a README file for the backend explaining the structure, API endpoints, and how to run it locally.",
+          "task_name": "Document backend code",
+          "id": 15,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 15
+  }
+}

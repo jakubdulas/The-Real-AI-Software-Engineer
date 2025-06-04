@@ -24,8 +24,8 @@ def prompt_choice():
 
 def add_note(notes):
     print("\n--- Add Note ---")
-    title = validate_non_empty("Title: ", "Title cannot be empty.")
-    content = validate_non_empty("Content: ", "Content cannot be empty.")
+    title = validate_non_empty(input("Title: "), "Title cannot be empty.")
+    content = validate_non_empty(input("Content: "), "Content cannot be empty.")
     note = Note(title=title, content=content)
     notes.append(note)
     save_notes(NOTES_FILE, notes)

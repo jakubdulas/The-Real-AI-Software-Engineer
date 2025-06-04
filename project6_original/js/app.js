@@ -1,5 +1,12 @@
 // js/app.js
 // Entry point: wires input, button, and modules. Handles user actions and orchestrates UI updates.
+import { getWeather } from "./weatherApi.js";
+import {
+  displayWeather,
+  displayError,
+  clearError,
+  clearWeather,
+} from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Get references to form and input elements

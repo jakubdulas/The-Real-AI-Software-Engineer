@@ -9,7 +9,7 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
  * @param {string} city - City name to fetch weather for
  * @returns {Promise<Object>} Resolves with weather data or error info
  */
-async function getWeather(city) {
+export async function getWeather(city) {
   // Build the API endpoint with query parameters
   const url = `${BASE_URL}?q=${encodeURIComponent(
     city

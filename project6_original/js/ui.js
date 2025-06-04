@@ -5,7 +5,7 @@
  * Display weather information in the DOM.
  * @param {Object} data - Weather data object from API
  */
-function displayWeather(data) {
+export function displayWeather(data) {
   clearWeather();
   clearError();
 
@@ -40,7 +40,7 @@ function displayWeather(data) {
  * Display error message to the user in the DOM.
  * @param {string} message - Error message to display
  */
-function displayError(message) {
+export function displayError(message) {
   clearWeather();
   const errorElem = document.getElementById("error-message");
   if (errorElem) {
@@ -52,7 +52,7 @@ function displayError(message) {
 /**
  * Clear the weather result display.
  */
-function clearWeather() {
+export function clearWeather() {
   const weatherResult = document.getElementById("weather-result");
   if (weatherResult) {
     weatherResult.innerHTML = "";
@@ -63,7 +63,7 @@ function clearWeather() {
 /**
  * Clear any error messages from the DOM.
  */
-function clearError() {
+export function clearError() {
   const errorElem = document.getElementById("error-message");
   if (errorElem) {
     errorElem.textContent = "";

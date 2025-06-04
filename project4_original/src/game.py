@@ -1,5 +1,5 @@
 import random
-from collision import check_self_collision, check_wall_collision
+from . import collision
 
 
 class SnakeGame:
@@ -41,9 +41,9 @@ class SnakeGame:
             self.snake[0][1] + self.direction[1],
         )
         # Check collisions
-        if check_wall_collision(
+        if collision.check_wall_collision(
             head, self.grid_size, self.grid_size
-        ) or check_self_collision([head] + self.snake):
+        ) or collision.check_self_collision([head] + self.snake):
             self.alive = False
             return
         self.snake.insert(0, head)

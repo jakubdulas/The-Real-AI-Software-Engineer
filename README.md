@@ -10,24 +10,24 @@
 
 Model: gpt-4.1
 
-| Metryka                               | Project 1 | Project 2 | Project 3 | Project 4 | Project 5                              | Project 6                      |
-| ------------------------------------- | --------- | --------- | --------- | --------- | -------------------------------------- | ------------------------------ |
-| Time of generation (s)                | 171.98    | 612.75    | 459.72    | 625.31    | 860.55                                 | 385.27                         |
-| Number of lines of code               | 128       | 377       | 400       | 292       | 657                                    | 252                            |
-| Number of used tokens                 | 102095    | 314406    | 237500    | 324657    | 445496                                 | 207828                         |
-| Number of lines of code after changes | 128       | 377       | 400       | 292       | 678                                    | 252                            |
-| Levenshtein distance                  | 0         | 0         | 0         | 0         | 293                                    | 146                            |
-| Cyclomatic complexity (avg)           | 2,2       | 2,6       | 2,9       | 2,2       | 1,4                                    | 2                              |
-| Code duplication (%)                  | 0         | 0         | 0         | 0         | 0                                      | 0                              |
-| Lint errors (Python)                  | 0         | 4         | 1         | 0         | 1                                      | N/A                            |
-| Notes                                 |           |           |           |           | Added scripts to html, removed exports | added API key, removed exports |
+| Metryka                               | Project 1 | Project 2                                 | Project 3                                                 | Project 4                                 | Project 5   | Project 6 |
+| ------------------------------------- | --------- | ----------------------------------------- | --------------------------------------------------------- | ----------------------------------------- | ----------- | --------- |
+| Time of generation (s)                | 92.25     | 167.72                                    | 450.09                                                    | 200.06                                    | 287.23      | 196.37    |
+| Number of lines of code               | 77        | 188                                       | 372                                                       | 227                                       | 313         | 243       |
+| Number of used tokens                 | 45590     | 85116                                     | 234158                                                    | 95994                                     | 171589      | 112006    |
+| Number of lines of code after changes | N/A       | 191                                       | N/A                                                       | 227                                       | 322         | 238       |
+| Levenshtein distance                  | 0         | 61                                        | 0                                                         | 31                                        | 140         | 142       |
+| Cyclomatic complexity (avg)           | 5.25      | 3.2                                       | 3.65                                                      | 2.44                                      | 1.81        | N/A       |
+| Code duplication (%)                  | 0%        | 0%                                        | 0%                                                        | 0%                                        | 0%          | 0%        |
+| Lint errors (Python)                  | 1         | 0                                         | 0                                                         | 0                                         | 0           | N/A       |
+| Notes                                 |           | Function to validate input was badly used | Agent added ability to select O or X for Human vs AI game | Created dir 'snake_game' which is useless | CORS Errors |           |
 
 #### Aggregation Metrics
 
 | Metryka   | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 | Project 6 |
 | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
-| % success | 100%      | 100%      | 100%      | 100%      | 70,7%     | 85,4%     |
+| % success | 100%      | 93,9%     | 100%      | 96,9%     | 86%       | 85,8%     |
 
 (Limit 1000) characters
 
-Average success: 92,68%
+Average success: 93,77%
