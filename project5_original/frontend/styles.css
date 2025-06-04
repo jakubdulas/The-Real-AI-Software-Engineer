@@ -1,95 +1,106 @@
 body {
-    background: #f6f7fb;
     font-family: Arial, sans-serif;
+    background: #f7f7f7;
     margin: 0;
     padding: 0;
-}
-
-header {
-    background: #3366cc;
-    color: #fff;
-    padding: 1rem 0;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-main {
-    max-width: 420px;
-    background: #fff;
-    margin: 2rem auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 2rem;
-}
-
-#add-task-form {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-#add-task-form input[type="text"],
-#add-task-form input[type="date"] {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.container {
+    background: #fff;
+    margin-top: 40px;
+    padding: 24px 32px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    min-width: 320px;
+    width: 100%;
+    max-width: 380px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 24px;
+    font-size: 1.75rem;
+}
+
+form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="date"] {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
     font-size: 1rem;
 }
 
-#add-task-form button {
-    background: #3366cc;
+button {
+    padding: 6px 16px;
+    background: #1976d2;
     color: #fff;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    padding: 0 1rem;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background 0.2s;
-}
-#add-task-form button:hover {
-    background: #254d97;
+    font-size: 1rem;
+    transition: background 0.1s;
 }
 
-#tasks-list {
-    list-style: none;
+button:hover {
+    background: #1565c0;
+}
+
+ul.task-list {
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#tasks-list li {
+li.task-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f1f5fb;
-    margin-bottom: 0.5rem;
-    padding: 0.65rem 0.8rem;
-    border-radius: 5px;
-    border: 1px solid #e3e6ef;
-    font-size: 1rem;
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+}
+
+li.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .task-title {
-    flex: 1 1 60%;
-    word-break: break-word;
+    font-weight: 500;
+    color: #222;
 }
 
-.task-due-date {
-    color: #777;
-    font-size: 0.95em;
-    margin-left: 1.2rem;
-    margin-right: 0.8rem;
+.task-due {
+    color: #666;
+    font-size: 0.95rem;
 }
 
-.delete-button {
-    background: #ff6b6b;
+.delete-btn {
+    background: #e53935;
     border: none;
     color: #fff;
-    padding: 0.3rem 0.7rem;
     border-radius: 3px;
-    cursor: pointer;
+    padding: 6px 10px;
+    margin-left: 8px;
     font-size: 0.98rem;
-    transition: background 0.18s;
+    cursor: pointer;
+    transition: background 0.1s;
 }
-.delete-button:hover {
-    background: #d81c1c;
+
+.delete-btn:hover {
+    background: #b71c1c;
 }

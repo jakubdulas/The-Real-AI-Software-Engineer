@@ -1,91 +1,98 @@
-def convert(value, from_unit, to_unit):
+# Temperature Converter: Unit Constants, Validation, Conversion Logic, and Console UI
+
+# Supported unit constants
+CELSIUS = 'Celsius'
+FAHRENHEIT = 'Fahrenheit'
+KELVIN = 'Kelvin'
+
+ALLOWED_UNITS = {CELSIUS, FAHRENHEIT, KELVIN}
+
+def is_valid_unit(unit: str) -> bool:
     """
-    Convert temperature from one unit to another.
-
-    Parameters:
-        value (float): The numerical value of the temperature.
-        from_unit (str): The unit of the temperature to convert from ('Celsius', 'Fahrenheit', 'Kelvin').
-        to_unit (str): The unit of the temperature to convert to ('Celsius', 'Fahrenheit', 'Kelvin').
-
+    Check if the given unit is among the supported temperature units.
+    Args:
+        unit (str): Unit string to validate.
     Returns:
-        float: Converted temperature value.
+        bool: True if unit is supported; False otherwise.
     """
-    # Conversion formulas
-    def celsius_to_fahrenheit(value):
-        return (value * 9/5) + 32
+    return unit.capitalize() in ALLOWED_UNITS
 
-    def celsius_to_kelvin(value):
-        return value + 273.15
-
-    def fahrenheit_to_celsius(value):
-        return (value - 32) * 5/9
-
-    def fahrenheit_to_kelvin(value):
-        return (value - 32) * 5/9 + 273.15
-
-    def kelvin_to_celsius(value):
-        return value - 273.15
-
-    def kelvin_to_fahrenheit(value):
-        return (value - 273.15) * 9/5 + 32
-
-    # Conversion logic
-    if from_unit == to_unit:
+def convert(value: float, from_unit: str, to_unit: str) -> float:
+    """
+    Convert a temperature value from one unit to another.
+    Args:
+        value (float): The temperature value to convert.
+        from_unit (str): The current unit of value.
+        to_unit (str): The desired target unit.
+    Returns:
+        float: The converted value in the target unit.
+    Raises:
+        ValueError: If from_unit or to_unit is invalid.
+    """
+    u_from = from_unit.capitalize()
+    u_to = to_unit.capitalize()
+    if u_from not in ALLOWED_UNITS or u_to not in ALLOWED_UNITS:
+        raise ValueError(f"Unsupported temperature units: {from_unit}, {to_unit}")
+    if u_from == u_to:
         return value
-    elif from_unit == 'Celsius' and to_unit == 'Fahrenheit':
-        return celsius_to_fahrenheit(value)
-    elif from_unit == 'Celsius' and to_unit == 'Kelvin':
-        return celsius_to_kelvin(value)
-    elif from_unit == 'Fahrenheit' and to_unit == 'Celsius':
-        return fahrenheit_to_celsius(value)
-    elif from_unit == 'Fahrenheit' and to_unit == 'Kelvin':
-        return fahrenheit_to_kelvin(value)
-    elif from_unit == 'Kelvin' and to_unit == 'Celsius':
-        return kelvin_to_celsius(value)
-    elif from_unit == 'Kelvin' and to_unit == 'Fahrenheit':
-        return kelvin_to_fahrenheit(value)
+    # Convert input to Celsius first
+    if u_from == CELSIUS:
+        temp_c = value
+    elif u_from == FAHRENHEIT:
+        temp_c = (value - 32) * 5 / 9
+    elif u_from == KELVIN:
+        temp_c = value - 273.15
     else:
-        raise ValueError('Invalid units for conversion')
-
-def main():
-    while True:
-        value, unit = get_user_input()
-
-        # Convert to other units
-        if unit == 'Celsius':
-            fahrenheit = convert(value, unit, 'Fahrenheit')
-            kelvin = convert(value, unit, 'Kelvin')
-            print(f"{value}°C = {fahrenheit}°F = {kelvin}K")
-        elif unit == 'Fahrenheit':
-            celsius = convert(value, unit, 'Celsius')
-            kelvin = convert(value, unit, 'Kelvin')
-            print(f"{value}°F = {celsius}°C = {kelvin}K")
-        elif unit == 'Kelvin':
-            celsius = convert(value, unit, 'Celsius')
-            fahrenheit = convert(value, unit, 'Fahrenheit')
-            print(f"{value}K = {celsius}°C = {fahrenheit}°F")
-        
-        # Ask if the user wants to do more conversions
-        more = input("Do you want to perform another conversion? (yes/no): ").strip().lower()
-        if more != 'yes':
-            print("Goodbye!")
-            break
+        raise ValueError(f"Unsupported input unit: {from_unit}")
+    # Now Celsius to target
+    if u_to == CELSIUS:
+        return temp_c
+    elif u_to == FAHRENHEIT:
+        return temp_c * 9 / 5 + 32
+    elif u_to == KELVIN:
+        return temp_c + 273.15
+    else:
+        raise ValueError(f"Unsupported target unit: {to_unit}")
 
 
 def get_user_input():
+    """
+    Prompt user to enter a numeric temperature value and a supported unit.
+    Validates numeric input and unit selection.
+    Returns:
+        Tuple (value: float, unit: str)
+    """
     while True:
+        raw_value = input(f"Enter the temperature value: ").strip()
         try:
-            value = float(input("Enter the temperature value: "))
-            unit = input("Enter the unit (Celsius, Fahrenheit, Kelvin): ").strip()
-            if unit not in ['Celsius', 'Fahrenheit', 'Kelvin']:
-                raise ValueError('Invalid unit')
-            return value, unit
-        except ValueError as e:
-            print(f"Invalid input: {e}. Please try again.")
+            value = float(raw_value)
+        except ValueError:
+            print("Error: Please enter a valid numeric value.")
+            continue
+        unit = input(f"Enter the unit ({'/'.join(ALLOWED_UNITS)}): ").strip()
+        if not is_valid_unit(unit):
+            print(f"Error: Unit must be one of: {', '.join(ALLOWED_UNITS)}.")
+            continue
+        return value, unit.capitalize()
 
-        print('Temperature Converter - Enter the temperature value and unit')
-        break # Temporary break to prevent infinite loop
+def display_converted_temperatures(value: float, from_unit: str):
+    """
+    Given a starting value and its unit, convert to the other two units and display all three
+    values clearly labeled.
+    """
+    units = [CELSIUS, FAHRENHEIT, KELVIN]
+    results = {}
+    for unit in units:
+        results[unit] = convert(value, from_unit, unit)
+    print("\n--- Temperature Conversion Results ---")
+    for unit in units:
+        print(f"{unit:>10}: {results[unit]:.2f}")
+    print()
 
-if __name__ == '__main__':
+def main():
+    print("Temperature Converter (Celsius, Fahrenheit, Kelvin)")
+    value, from_unit = get_user_input()
+    display_converted_temperatures(value, from_unit)
+
+if __name__ == "__main__":
     main()
-

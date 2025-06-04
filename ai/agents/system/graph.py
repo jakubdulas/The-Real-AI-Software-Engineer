@@ -9,7 +9,7 @@ from langgraph.prebuilt import ToolNode
 from langgraph.checkpoint.memory import MemorySaver
 
 
-def create_system(code_dir, model="gpt-4o-mini"):
+def create_system(code_dir, model="gpt-4.1"):
     team = """
     Coder - able to create files, write files with code and run it. This agent can only write code. It can't create images. Only Code. Python Code.
     Reseracher - able to use internet to make research. Can only browse internet and return search results.

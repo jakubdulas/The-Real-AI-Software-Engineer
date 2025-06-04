@@ -16,7 +16,7 @@ def collect_files(root_path, skip_dir):
     file_map = {}
     for dirpath, dirnames, filenames in os.walk(root_path):
         # Modify dirnames in-place to skip directories
-        dirnames[:] = [d for d in dirnames if d != skip_dir]
+        dirnames[:] = [d for d in dirnames if d != skip_dir or not d.startswith("__")]
 
         for filename in filenames:
             rel_path = os.path.relpath(os.path.join(dirpath, filename), root_path)

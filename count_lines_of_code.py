@@ -15,7 +15,7 @@ def count_lines_in_directory(root_path, skip_dir):
     total_lines = 0
     for dirpath, dirnames, filenames in os.walk(root_path):
         # Modify dirnames in-place to skip directories
-        dirnames[:] = [d for d in dirnames if d != skip_dir and not d.startswith("__")]
+        dirnames[:] = [d for d in dirnames if d != skip_dir or not d.startswith("__")]
 
         for filename in filenames:
             filepath = os.path.join(dirpath, filename)

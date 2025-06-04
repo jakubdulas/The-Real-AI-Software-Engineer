@@ -15,7 +15,7 @@ class CoderAgentState(TypedDict):
 
 
 class Coder(SyncAgent):
-    def __init__(self, working_dir, llm="gpt-4o", reasoning_graph=cot_graph):
+    def __init__(self, working_dir, llm="gpt-4o", reasoning_graph=tot_graph_v1):
         print("RESONING GRAPH", reasoning_graph)
         super().__init__(
             CoderAgentState, llm, coder_system_prompt, tools, reasoning_graph

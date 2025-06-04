@@ -1,10 +1,8 @@
-# v0.2
+# v1.2
 
 ## Key changes
 
-- Improved prompts, especially coder system and tools prompts.
-- Sharing the output from researcher to documenter.
-- Removing backlog for PM.
+- Running tests on Coder with ToT reasoning
 
 ### Metrics
 
@@ -12,23 +10,25 @@
 
 Model: gpt-4.1
 
-| Metryka                               | Project 1 | Project 2 | Project 3 | Project 4 | Project 5                              | Project 6                      |
-| ------------------------------------- | --------- | --------- | --------- | --------- | -------------------------------------- | ------------------------------ |
-| Time of generation (s)                | 171.98    | 612.75    | 459.72    | 625.31    | 860.55                                 | 385.27                         |
-| Number of lines of code               | 128       | 377       | 400       | 292       | 657                                    | 252                            |
-| Number of used tokens                 | 102095    | 314406    | 237500    | 324657    | 445496                                 | 207828                         |
-| Number of lines of code after changes | 128       | 377       | 400       | 292       | 678                                    | 252                            |
-| Levenshtein distance                  | 0         | 0         | 0         | 0         | 293                                    | 146                            |
-| Cyclomatic complexity (avg)           | 2,2       | 2,6       | 2,9       | 2,2       | 1,4                                    | 2                              |
-| Code duplication (%)                  | 0         | 0         | 0         | 0         | 0                                      | 0                              |
-| Lint errors (Python)                  | 0         | 4         | 1         | 0         | 1                                      | N/A                            |
-| Notes                                 |           |           |           |           | Added scripts to html, removed exports | added API key, removed exports |
+| Metryka                               | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 | Project 6 |
+| ------------------------------------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| Time of generation (s)                | 300.82    | 562.42    | 743.00    | 707.95    | 699.62    |           |
+| Number of lines of code               | 91        | 255       | 809       | 801       | 690       |           |
+| Number of used tokens                 | 208949    | 441787    | 711946    | 661526    | 545036    |           |
+| Number of lines of code after changes | N/A       | 255       | N/A       | N/A       | 690       |           |
+| Levenshtein distance                  | 0         | 4         | 0         | 0         | 23        |           |
+| Cyclomatic complexity (avg)           | 3.8       | 2.23      | 3.07      | 2.34      | 1.5       |           |
+| Code duplication (%)                  | 0%        | 0%        | 0%        | 0%        | 0%        |           |
+| Lint errors (Python)                  | 1         | 5         | 5         | 0         | 1         |           |
+| Notes                                 |           |           |           |           |           |           |
+
+Project 5: There is no ability to remove tasks on frontend. Needed to fix CORS (set to all hosts)
 
 #### Aggregation Metrics
 
-| Metryka   | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 | Project 6 |
-| --------- | --------- | --------- | --------- | --------- | --------- | --------- |
-| % success | 100%      | 100%      | 100%      | 100%      | 70,7%     | 85,4%     |
+| Metryka   | Project 1 | Project 2 | Project 3 | Project 4 | Project 5                                                       | Project 6 |
+| --------- | --------- | --------- | --------- | --------- | --------------------------------------------------------------- | --------- |
+| % success | 100%      | 100%      | 99,6%     | 100%      | 72,7% (subtracted 25% for not having delete task functionality) |           |
 
 (Limit 1000) characters
 

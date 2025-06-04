@@ -1,86 +1,93 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Establish core structure and basic snake movement for the Snake game using Pygame.",
+      "goal": "Develop core components for the Snake game: basic grid rendering, input handling, and snake movement.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Create the initial project folder structure and add a requirements.txt file listing Pygame as a dependency.",
-          "task_name": "Set up project directory and requirements.txt for Pygame.",
+          "task_description": "Initialize a Python project for the Snake game, set up the main file, and include a requirements.txt listing Pygame as a dependency.",
+          "task_name": "Set up Pygame project and create requirements.txt",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Write a Python script to initialize a Pygame window and visually render a grid for the Snake game. Ensure the grid cells are clearly defined.",
-          "task_name": "Initialize game window and grid rendering.",
+          "task_description": "Create the game window and render a visible grid that will be the playground for the Snake game using Pygame graphics primitives.",
+          "task_name": "Implement visual grid rendering in Pygame",
           "id": 2,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Develop logic for representing the snake as a list of positions/cells. Enable movement with arrow key controls. Update snake position every frame.",
-          "task_name": "Implement snake entity and movement based on arrow key input.",
+          "task_description": "Create logic and code to represent the snake as a modular structure (for example, a list of coordinates for its body), and implement its movement in the game loop. The snake should move according to the current movement direction each frame.",
+          "task_name": "Implement snake movement and body structure",
           "id": 3,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Organize the initial codebase into logical modules or functions for game loop, rendering, and handling user input. Ensure readability and extensibility.",
-          "task_name": "Design modular code structure for game loop, rendering, and input handling.",
+          "task_description": "Add event handlers to capture arrow key inputs and update the snake's movement direction, ensuring the snake cannot reverse into itself directly.",
+          "task_name": "Implement arrow key input handling for snake direction",
           "id": 4,
           "done": false
         }
       ]
     },
     "Sprint 2": {
-      "goal": "Implement apple mechanics, collision detection, scoring system, and refine modularity.",
+      "goal": "Implement apple spawning, collision logic, score display, and modularize core components.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Add an apple that randomly spawns on empty grid cells. Make the snake grow when it eats the apple, and respawn the apple elsewhere.",
-          "task_name": "Implement apple spawning logic and snake growth mechanic.",
+          "task_description": "Make the snake grow when it eats the apple, increase the score, and respawn the apple in a new position.",
+          "task_name": "Implement snake growth and apple consumption logic",
           "id": 5,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Refine and separate code into clear logical modules/files: game loop, rendering, input, mechanics (apple/snake), collision, and scoring. Ensure the code follows good readability and maintainability practices.",
-          "task_name": "Refactor code for further modularity and logical separation.",
+          "task_description": "Add logic to randomly spawn an apple on the grid, ensuring it doesn't overlap with the snake's body. This includes creating the apple object/component.",
+          "task_name": "Implement apple spawning logic",
           "id": 6,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Detect when the snake collides with the grid boundaries or itself. End the game when a collision is detected and display a game over screen.",
-          "task_name": "Implement collision detection (walls and self) and end game logic.",
+          "task_description": "Add logic to detect when the snake collides with the wall or itself, and end the game accordingly.",
+          "task_name": "Implement collision detection with walls and self",
           "id": 7,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Track the player's score (number of apples eaten) and display it in the game window. Update the score when the snake eats an apple.",
-          "task_name": "Implement scoring system and display the player's score.",
+          "task_description": "Organize the codebase into logical components or classes (game loop, rendering, input handling, collision logic, etc.) for better readability and maintainability.",
+          "task_name": "Refactor code into modular components",
           "id": 8,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Render the current score on the game window using Pygame's text rendering capabilities, updating it when the snake eats an apple.",
+          "task_name": "Display score on game window",
+          "id": 9,
           "done": false
         }
       ]
     },
     "Sprint 3": {
-      "goal": "Create thorough documentation for the Snake game codebase and provide clear instructions for setup and gameplay.",
+      "goal": "Document the modular Snake game implementation and usage instructions.",
       "tasks": [
         {
           "assignee": "Documenter",
-          "task_description": "Add a README.md with instructions for project setup, installation, running the game, and explanation of controls and gameplay objectives.",
-          "task_name": "Write a game setup and user guide.",
-          "id": 9,
+          "task_description": "Explain how to install dependencies from requirements.txt, how to run the game, and basic controls for the player in a clear README file.",
+          "task_name": "Write usage and setup instructions",
+          "id": 10,
           "done": false
         },
         {
           "assignee": "Documenter",
-          "task_description": "Document all modules, functions, and classes in the codebase to describe their purpose and usage according to best practices.",
-          "task_name": "Write detailed code documentation.",
-          "id": 10,
+          "task_description": "Document all code components, classes, and functions. Explain the structure, major logical parts (game loop, rendering, input handling, collision, etc.), and how to extend or modify the game.",
+          "task_name": "Create comprehensive code documentation",
+          "id": 11,
           "done": false
         }
       ]
@@ -88,6 +95,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 9
+    "num_tasks": 11
   }
 }

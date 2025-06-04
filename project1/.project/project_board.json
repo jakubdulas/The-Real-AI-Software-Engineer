@@ -1,53 +1,46 @@
 {
   "sprints": {
     "Sprint 1": {
-      "goal": "Develop a basic temperature converter application functionality.",
+      "goal": "Design and implement a functional temperature converter core logic and user interface in converter.py.",
       "tasks": [
         {
           "assignee": "Coder",
-          "task_description": "Create the main structure for the console-based temperature converter in a single Python file named `converter.py`. Include necessary imports and a basic program loop that will later handle user input and conversions.",
-          "task_name": "Set up primary structure for the console-based application",
+          "task_description": "Define constants for supported units (Celsius, Fahrenheit, Kelvin) and implement a validation function to ensure input unit is valid. Simplifies future conversions and error handling.",
+          "task_name": "Define unit constants and validate allowed units",
           "id": 1,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Develop a reusable function `convert(value, from_unit, to_unit)` that performs temperature conversions between Celsius, Fahrenheit, and Kelvin. Ensure the logic is accurate and covers all possible conversions.",
-          "task_name": "Implement temperature conversion logic",
+          "task_description": "Write a function that takes a temperature value and its unit, and returns the converted value in a target unit. The function should handle conversions between Celsius, Fahrenheit, and Kelvin.",
+          "task_name": "Implement convert(value, from_unit, to_unit) function",
           "id": 2,
           "done": false
         },
         {
           "assignee": "Coder",
-          "task_description": "Write code to accept numeric value and unit inputs from the user. Validate these inputs to ensure numerical correctness and valid unit selection (Celsius, Fahrenheit, or Kelvin).",
-          "task_name": "Handle user input and validation",
+          "task_description": "Write code to prompt user for input, validate numeric value and check that the unit matches supported units. Handle invalid inputs gracefully with informative error messages.",
+          "task_name": "Implement input parsing and validation for value and unit",
           "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "After parsing and validating input, use the convert function to compute the other two units and display the results clearly to the user in the console.",
+          "task_name": "Display converted values in a clear format",
+          "id": 4,
           "done": false
         }
       ]
     },
     "Sprint 2": {
-      "goal": "Finalize the temperature converter application with user interaction and display.",
+      "goal": "Write and refine code documentation for converter.py, making sure all functions and logic are clearly explained.",
       "tasks": [
         {
-          "assignee": "Coder",
-          "task_description": "Review the code for readability, efficiency, and cleanliness. Make necessary refactoring for clear and understandable code structure.",
-          "task_name": "Refactor and clean up the code",
-          "id": 4,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Thoroughly test the application for various scenarios including edge cases and invalid inputs. Debug any issues to ensure the application runs smoothly without errors.",
-          "task_name": "Test and debug the entire application",
+          "assignee": "Documenter",
+          "task_description": "Write thorough documentation for the temperature converter code, including docstrings for all functions and general explanations about the program structure. Enhance code readability and testability.",
+          "task_name": "Document all code and functions in converter.py",
           "id": 5,
-          "done": false
-        },
-        {
-          "assignee": "Coder",
-          "task_description": "Connect the temperature conversion function with user inputs. Display the converted results clearly in the terminal, showing the temperature in all three units (Celsius, Fahrenheit, Kelvin).",
-          "task_name": "Integrate conversion logic with console input/output",
-          "id": 6,
           "done": false
         }
       ]
@@ -55,6 +48,6 @@
   },
   "backlog": [],
   "metadata": {
-    "num_tasks": 6
+    "num_tasks": 5
   }
 }
