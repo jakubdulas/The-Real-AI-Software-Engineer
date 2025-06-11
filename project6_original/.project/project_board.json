@@ -1,0 +1,81 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Set up project structure and develop city input and API request functionality for weather app.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Set up the basic folder and file structure for the weather app. Create index.html, main.css, and JavaScript folder with modular file setup (e.g., api.js, ui.js).",
+          "task_name": "Create initial project structure with folders for HTML, CSS, and JS files",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Add an input field and submit button to index.html. Style with CSS for user input of city name.",
+          "task_name": "Design and implement city input field and submit button in HTML/CSS",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Researcher",
+          "task_description": "Verify which free weather APIs can be used directly from browser with JavaScript. Check API key registration process, CORS policy, and response format for current weather endpoint.",
+          "task_name": "Research usage of OpenWeatherMap/public weather APIs from frontend (CORS, API key, fetch structure)",
+          "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create a modular JS file (api.js) that exports a function to fetch weather data from the chosen API using the provided city name. Handle API key securely (frontend best practices), and structure response data for further use.",
+          "task_name": "Implement JavaScript module for API requests to fetch weather data by city name",
+          "id": 4,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write logic that captures user city input, calls the weather API request module (api.js), and handles data or error for further processing.",
+          "task_name": "Implement JS logic for input event handling and calling API request module",
+          "id": 5,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Display weather data, handle errors, and modularize UI logic for the weather app.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Add logic to gracefully handle scenarios such as city not found, network issues, or missing data. Display user-friendly error messages when applicable in the UI.",
+          "task_name": "Implement error handling and messaging for invalid city or API errors",
+          "id": 6,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Develop a separate JavaScript module (ui.js) responsible for rendering weather data (temperature, humidity, conditions) in the DOM. Expose functions to update weather display and show/hide error or loading states.",
+          "task_name": "Create and implement JS module for updating UI with weather information",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Connect city input, API module, and UI module for a seamless user interaction: from entering a city to displaying the weather or an error, including loading state indication.",
+          "task_name": "Integrate all modules and finalize app behavior for user flow",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Write MD or HTML documentation summarizing how the weather app works, file/module structure, how to run locally, API key setup, and how each module interacts. Include code comments where necessary.",
+          "task_name": "Document codebase and provide usage instructions",
+          "id": 8,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 8
+  }
+}
