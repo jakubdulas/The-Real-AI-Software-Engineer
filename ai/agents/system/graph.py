@@ -157,7 +157,9 @@ if __name__ == "__main__":
     # with open("./system_graph.png", "wb") as f:
     #     f.write(system.get_graph().draw_mermaid_png())
 
-    output = create_system().invoke(
+    system = create_system("./`")
+
+    output = system.invoke(
         {
             "project_scope": "Create django project for web app. THis app is about todo list connected with tracking the workouts and managing time."
         },

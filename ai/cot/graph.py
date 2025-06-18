@@ -100,14 +100,18 @@ cot_graph = graph_builder.compile()
 
 
 if __name__ == "__main__":
-    cot_state = cot_graph.invoke(
-        {"messages": [("user", "How to create pacman in python")]},
-        config={
-            "max_depth": 10,
-            "configurable": {
-                "llm": "gpt-4o-mini",
-                "system_prompt": "You are code assistant.",
-            },
-        },
-    )
-    print(cot_state["intermediate_steps"])
+
+    with open("./cot_graph.png", "wb") as f:
+        f.write(cot_graph.get_graph(xray=True).draw_mermaid_png())
+
+    # cot_state = cot_graph.invoke(
+    #     {"messages": [("user", "How to create pacman in python")]},
+    #     config={
+    #         "max_depth": 10,
+    #         "configurable": {
+    #             "llm": "gpt-4o-mini",
+    #             "system_prompt": "You are code assistant.",
+    #         },
+    #     },
+    # )
+    # print(cot_state["intermediate_steps"])

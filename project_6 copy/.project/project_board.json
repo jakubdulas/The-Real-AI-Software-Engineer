@@ -1,0 +1,86 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Set up the base project structure and implement core weather fetching and display functionality for the frontend weather app.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Create a basic folder structure for the app, including index.html, style.css, and separate JS files (e.g., api.js, ui.js, main.js). Ensure basic HTML skeleton is in place.",
+          "task_name": "Set up project structure with HTML, CSS, and modular JavaScript files",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Build the HTML user interface for entering a city, submitting the search, and showing weather info (temperature, humidity, weather condition), as well as an area for error messages.",
+          "task_name": "Implement HTML UI for city input and weather display",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "In api.js, write a function to fetch current weather data for a city from OpenWeatherMap (or similar public API). Handle fetch errors and return clear results.",
+          "task_name": "Implement api.js to fetch weather data from OpenWeatherMap API",
+          "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Write functions in ui.js to update the main weather display area or show error messages when the API call fails or the city is not found.",
+          "task_name": "Implement ui.js to update and render UI based on weather data or error",
+          "id": 4,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "In main.js, capture user inputs and button clicks. Trigger api.js to fetch weather and ui.js to display the weather or error messages as needed.",
+          "task_name": "Wire up event handling in main.js",
+          "id": 5,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Add error handling, input validation, improved UI styles, and documentation for the weather app.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Enhance the visual appearance and usability of the weather app using CSS, making sure the app is responsive and visually appealing on both desktop and mobile.",
+          "task_name": "Improve UI/UX with CSS styling",
+          "id": 6,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Improve the user experience by validating city input and handling cases such as empty inputs, illegal characters, or non-existent cities before sending API requests. Display clear error messages for each scenario.",
+          "task_name": "Enhance error handling and city input validation",
+          "id": 7,
+          "done": false
+        },
+        {
+          "assignee": "Documenter",
+          "task_description": "Create a simple README or in-app help section that explains how to use the app, including requirements (API key/etc.), search instructions, features, and handling errors.",
+          "task_name": "Write user-facing documentation and app usage instructions",
+          "id": 8,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 3": {
+      "goal": "Document all code files and functions for maintainability and future development.",
+      "tasks": [
+        {
+          "assignee": "Documenter",
+          "task_description": "Add concise but thorough comments and documentation headers to all JS files and major functions to clarify their role and usage, supporting future maintenance.",
+          "task_name": "Generate in-code documentation and file/module headers",
+          "id": 9,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 9
+  }
+}

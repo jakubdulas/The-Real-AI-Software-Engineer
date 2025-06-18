@@ -49,4 +49,4 @@ if __name__ == "__main__":
     # coder
 
     # with open("./output.png", "wb") as f:
-    #     f.write(coder.graph.get_graph(xray=True).draw_mermaid_png())
+    #     f.write(out.graph.get_graph(xray=True).draw_mermaid_png())

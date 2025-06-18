@@ -5,9 +5,9 @@
  * @param {Object} data - Weather data with fields: city, temperature, humidity, condition, description, icon.
  */
 export function updateWeatherDisplay(data) {
-    const weatherResult = document.getElementById('weather-result');
-    // Create weather display HTML
-    weatherResult.innerHTML = `
+  const weatherResult = document.getElementById("weather-result");
+  // Create weather display HTML
+  weatherResult.innerHTML = `
         <div class="weather-city"><strong>${data.city}</strong></div>
         <div class="weather-main">
             <img src="https://openweathermap.org/img/wn/${data.icon}@2x.png" alt="${data.description}" class="weather-icon">
@@ -27,15 +27,15 @@ export function updateWeatherDisplay(data) {
  * @param {string} message
  */
 export function showError(message) {
-    const weatherResult = document.getElementById('weather-result');
-    if (message) {
-        weatherResult.innerHTML = `
+  const weatherResult = document.getElementById("weather-result");
+  if (message) {
+    weatherResult.innerHTML = `
             <div class="weather-error" role="alert" aria-live="polite" tabindex="0">
                 <span>⚠️</span> ${message}
             </div>
         `;
-    } else {
-        // Clear error (for example, when input is cleared)
-        weatherResult.innerHTML = '';
-    }
+  } else {
+    // Clear error (for example, when input is cleared)
+    weatherResult.innerHTML = "";
+  }
 }
