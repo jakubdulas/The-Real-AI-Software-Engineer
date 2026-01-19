@@ -1,0 +1,86 @@
+{
+  "sprints": {
+    "Sprint 1": {
+      "goal": "Establish the core architecture for the user management and rotation logic for online meeting, including break handling and meeting scheduling structures.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Define Python classes or data structures to represent users (with break status and preferences), meeting rooms, and meetings. These will be used as the backbone for all meeting and rotation logic.",
+          "task_name": "Design core data structures for users, meetings, and preferences.",
+          "id": 1,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Design the logic and scheduling mechanism to rotate users for 1vs1 meetings. Ensure that users marked for a break are skipped for one round.",
+          "task_name": "Plan rotation logic for 1vs1 meetings supporting user breaks.",
+          "id": 2,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Implement a mechanism to accept an external sorting function that, for a given user, sorts other users from best to worst match. Integrate this into the rotation and pairing logic for meetings.",
+          "task_name": "Enable injection of custom user-sorting function for meeting preferences.",
+          "id": 3,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Create a function to handle the setup of the first meeting with all users together in one room, as a configuration option.",
+          "task_name": "Implement logic for initial all-users-in-one-room meeting.",
+          "id": 4,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 2": {
+      "goal": "Develop and implement the meeting rotation functions, including integration of user breaks, preference-based sorting, and scalability to handle large user sets efficiently.",
+      "tasks": [
+        {
+          "assignee": "Coder",
+          "task_description": "Code the main function that rotates users for 1vs1 meetings, considering user breaks so skipped users are only omitted for one round. Make sure the system supports ongoing rotations.",
+          "task_name": "Implement meeting rotation logic supporting user breaks.",
+          "id": 5,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Update the meeting rotation logic to accept a user-defined sorting function so each user meets others in their sorted order of preferences, whenever possible.",
+          "task_name": "Integrate preference-based sorting into meeting rotations.",
+          "id": 6,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Ensure the rotation and scheduling code performs efficiently and correctly, even when the number of users exceeds 100, handling impossible 1vs1 completions with best-effort rotations.",
+          "task_name": "Optimize rotation scheduling for scalability with large user counts.",
+          "id": 7,
+          "done": false
+        }
+      ]
+    },
+    "Sprint 3": {
+      "goal": "Prepare configuration utilities and code documentation for the meeting manager system.",
+      "tasks": [
+        {
+          "assignee": "Documenter",
+          "task_description": "Produce detailed documentation describing the data structures, configuration, algorithms, and all public-facing functions for configuring and running meeting rotations.",
+          "task_name": "Document the codebase.",
+          "id": 8,
+          "done": false
+        },
+        {
+          "assignee": "Coder",
+          "task_description": "Allow configuration of whether the event starts with all users in one room, accepting sorting functions and user info for initial setup. Make configuration user-friendly and testable.",
+          "task_name": "Implement event configuration options including initial all-in-one-room meeting and user preferences.",
+          "id": 9,
+          "done": false
+        }
+      ]
+    }
+  },
+  "backlog": [],
+  "metadata": {
+    "num_tasks": 9
+  }
+}
